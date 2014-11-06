@@ -7,7 +7,7 @@ classdef Questions < handle
         fList %formulas
 		number = 1
     end        
-    
+     
 	methods
 		function Questions()
 		end
