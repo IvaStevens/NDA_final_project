@@ -2,6 +2,7 @@ classdef Board < handle
     properties
         size
 		brd
+		axn % location of axon hillock on board
     end
 	
 	%Set up code
@@ -28,6 +29,7 @@ classdef Board < handle
 			top = randi(bLen-nLen); %logic?
 			left = randi(bWid-nWid); %logic?
 			obj.brd(top:top+nLen,left:left+nWid) = nrn;
+			% TODO: obj.axn = brd == 2. but not as x,y cordinates... just a single value...
 		end
 		
 	end
