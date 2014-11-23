@@ -99,7 +99,7 @@ str1=get(hObject,'String');
 str2=str1{1};
 
 %b.checkanswer(str2) - global that takes editbox answer and compares to
-%answer list. Sends back string to update text1.
+%answer list. doesn't send anything back.
 
 ansNum=str2num(str2);
 ansStr=sprintf('Your answer is %f. That is correct!', ansNum);
