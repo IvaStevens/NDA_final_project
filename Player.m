@@ -4,4 +4,15 @@ classdef Player < handle
         score
         response
     end
+			
+	%Set up code
+	methods 
+			function getLevel
+				return Level	
+			end
+	
+	end
+					
+					
+					
 end
