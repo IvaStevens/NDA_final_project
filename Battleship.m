@@ -55,7 +55,7 @@ classdef Battleship < handle
             
             m = zeros(bLen, bwid, n);
             for i = 1:n
-                
+                m(:,:,i) = temp;
             end
         end
         
