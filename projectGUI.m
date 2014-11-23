@@ -94,8 +94,8 @@ function edit1_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of edit1 as text
 %        str2double(get(hObject,'String')) returns contents of edit1 as a double
 
-str1=get(hObject,'String')
-str2=str1{1}
+str1=get(hObject,'String');
+str2=str1{1};
 ansNum=str2num(str2);
 ansStr=sprintf('Your answer is %f. That is correct!', ansNum);
 
