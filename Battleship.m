@@ -48,13 +48,49 @@ classdef Battleship < handle
             % This function uses the design of the neuron, the size of the board, and previous guesses
             % to determine a matix of values that corresponds to the probability that the neuron is located
             % at any given spot.
-            
             nrn = []; % neuron matrix
+            [nLen, nWid] = size(nrn);
             n = sum(nrn > 0);
-            nrnMask = rot90(rot90(nrn));
-            
-            m = zeros(bLen, bwid, n);
+            nrnMask = int(rot90(rot90(nrn == 0))); %1 denotes where it can be
+            f = find(nrn);
+            m = zeros(bLen, bWid, n);
             for i = 1:n
+                temp = ones(bLen, bWid); % 1 denotes where the point could be
+                pt = f(n);
+                top = ceil(pt/bWid);
+                
+                % remove top row if necessary
+                if top ~= 1
+                    temp(1:top-1,:) = 0;
+                end
+                
+                % remove bottom row if necessary
+                if top ~= bLen
+                    bot = nLen-top;
+                    temp(bLen-(bot-1):bLen,:) = 0;
+                end
+                
+                % remove left side
+                lft = mod(pt,nWid);
+                if left ~= 1
+                    temp(:,1:lft-1) = 0;
+                end
+                
+                % remove right side
+                if lft ~= nWid
+                    rgt = nWid - lft;
+                    temp(:, bWid - (rgt - 1): bWid) = 0;
+                end
+                
+                % remove space around guesses
+                nGes = length(obj.guesses);
+                for j = 1: nGes
+                    if temp(obj.guesses(NGues)) ~= 0
+                        tp = ; %logic?
+                        lf = ; %logic?
+                        temp(tp:tp+nLen-1,lf:lf+nWid-1) = nrnMask;
+                    end
+                end
                 m(:,:,i) = temp;
             end
         end
