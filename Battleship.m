@@ -21,7 +21,7 @@ classdef Battleship < handle
             obj.board.placeNeuron(nrn);
             obj.score = 0;
             %obj.Play
-            obj.faq = Questions();
+            obj.faq = Questions(obj);
         end
         
         %This function should pull the next question/answer set
@@ -38,10 +38,25 @@ classdef Battleship < handle
             % Say GameOver ad show final score
         end
         
-        function calc_probabilty_nrn(obj,guesses)
+        function updateGuesses(obj, guess)
+            % assert guess within range
+            % assert guess not repeated
+            obj.guesses = [obj.guesses, guess];
+        end
+        
+        function calc_probabilty_nrn(obj)
             % This function uses the design of the neuron, the size of the board, and previous guesses
             % to determine a matix of values that corresponds to the probability that the neuron is located
             % at any given spot.
+            
+            nrn = []; % neuron matrix
+            n = sum(nrn > 0);
+            nrnMask = rot90(rot90(nrn));
+            
+            m = zeros(bLen, bwid, n);
+            for i = 1:n
+                
+            end
         end
         
         function a = calc_probabilty_axn(obj,guesses)
