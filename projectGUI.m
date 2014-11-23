@@ -23,7 +23,7 @@ function varargout = projectGUI(varargin)
 
 % Edit the above text to modify the response to help projectGUI
 
-% Last Modified by GUIDE v2.5 03-Nov-2014 12:26:08
+% Last Modified by GUIDE v2.5 23-Nov-2014 13:19:07
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -79,6 +79,10 @@ function varargout = projectGUI_OutputFcn(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Get default command line output from handles structure
+
+[X,Y]=getpts(handles.axes1);
+varargout{2}=[X,Y];
+
 varargout{1} = handles.output;
 
 
@@ -97,8 +101,6 @@ ansStr=sprintf('Your answer is %f. That is correct!', ansNum);
 
 set(handles.text1,'String',ansStr);
 
-
-
 % --- Executes during object creation, after setting all properties.
 function edit1_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to edit1 (see GCBO)
@@ -110,3 +112,4 @@ function edit1_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
