@@ -1,0 +1,3 @@
+Global b;
+b = Battleship;
+
