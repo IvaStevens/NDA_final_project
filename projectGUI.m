@@ -59,10 +59,12 @@ function projectGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 % expression to the left of the equals sign is not a valid target. Also
 % can't put it at the top or it will screw with the function
 global OB;
-OB=test(1,1);
+OB = Battleship;
+%OB=test(1,1);
 
 % Use case to determine what question to put in the static text box.
-welcome = OB.getnextquest(0);
+
+welcome = OB.getnextquest();
 %welcome = 'Hello! Welcome to Neuron Battleship... blah blah blah';
 set(handles.text1,'string',welcome);
 
