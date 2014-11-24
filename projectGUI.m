@@ -91,8 +91,8 @@ function varargout = projectGUI_OutputFcn(hObject, eventdata, handles)
 
 %k=waitforbuttonpress - can put this in a loop so that the getpts func only 
 %runs when appropriate. I think it can go here? 
-[X,Y]=getpts(handles.axes1);
-varargout{2}=[X,Y];
+% [X,Y]=getpts(handles.axes1);
+% varargout{2}=[X,Y];
 
 varargout{1} = handles.output;
 
