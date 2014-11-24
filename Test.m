@@ -1,3 +1,3 @@
-Global b;
-b = Battleship;
+Global OB;
+OB = Battleship;
 
