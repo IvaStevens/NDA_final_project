@@ -44,7 +44,7 @@ else
 end
 % End initialization code - DO NOT EDIT
 
-global b;
+
 
 
 % --- Executes just before projectGUI is made visible.
@@ -55,9 +55,14 @@ function projectGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to projectGUI (see VARARGIN)
 
+% No idea where to initialize this - I keep getting errors that the
+% expression to the left of the equals sign is not a valid target. Also
+% can't put it at the top or it will screw with the function
+global OB;
+OB=test(1,1);
 
 % Use case to determine what question to put in the static text box.
-welcome = b.getquestion(1);
+welcome = OB.getnextquest(0);
 %welcome = 'Hello! Welcome to Neuron Battleship... blah blah blah';
 set(handles.text1,'string',welcome);
 
@@ -105,7 +110,7 @@ ansNum=str2num(str2);
 %b.checkanswer(str2) - global that takes editbox answer and compares to
 %answer list. Sends back string to update text1.
 
-newText=b.checkanswer(str2);
+newText=OB.checkans(str2);
 %newText=sprintf(ansStr);
 
 set(handles.text1,'String',newText);
