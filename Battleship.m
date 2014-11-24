@@ -7,13 +7,13 @@ classdef Battleship < handle
         level
         neuron
         faq
-        guesses % For simplicity sake: lets keep guesses as a single number to reference a location
+        guesses % For simplicity sake: Keeping guesses as an index
     end
     
     methods
         %startup code
         function  obj = Battleship()
-            lvl = Level.Easy; %syntax?
+            lvl = Level.Easy; 
             obj.level = lvl;
             obj.board = Board(lvl);
             obj.neuron = Neuron(lvl);
@@ -35,7 +35,7 @@ classdef Battleship < handle
                 % send to questions class
                 % update score
             end
-            % Say GameOver ad show final score
+            % Say GameOver and show final score
         end
         
         function str = getnextquest(obj)
@@ -44,12 +44,14 @@ classdef Battleship < handle
         end
         
         function out = checkans(obj, str)
-			obj.faq.setUserResponse(str); % write this. set new variable in Question function
-			check = obj.faq.answerQuestion;
+			%obj.faq.setUserResponse(str); % write this. set new variable in Question function
+			%check = obj.faq.answerQuestion;
+            check = true;
 			if check
 				out = 'Correct!';
-			else
-				out = 'Sorry. Try again.';
+            else
+                last = obj.faq.getQuestion(); %logic
+				out = ['Sorry. Try again. \n',last];
 			end
         end
         
@@ -59,7 +61,7 @@ classdef Battleship < handle
             obj.guesses = [obj.guesses, guess];
         end
         
-        function calc_probabilty_nrn(obj)
+        function prob = calc_probabilty_nrn(obj)
             % This function uses the design of the neuron, the size of the board, and previous guesses
             % to determine a matix of values that corresponds to the probability that the neuron is located
             % at any given spot.
@@ -101,13 +103,16 @@ classdef Battleship < handle
                 nGes = length(obj.guesses);
                 for j = 1: nGes
                     if temp(obj.guesses(NGues)) ~= 0
-                        tp = 7; %logic?
-                        lf = 7; %logic?
+                        tp = 1; %logic?
+                        lf = 1; %logic?
                         temp(tp:tp+nLen-1,lf:lf+nWid-1) = nrnMask;
                     end
                 end
                 m(:,:,i) = temp;
             end
+            s = sum(m,3);
+            tot = sum(sum(m));
+            prob = s/tot;
         end
         
         function a = calc_probabilty_axn(obj,guesses)
