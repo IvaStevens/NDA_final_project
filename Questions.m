@@ -11,10 +11,10 @@ classdef Questions < handle
     properties
         qList %questions:   {['q1'],['q2'],['q3'],...,['qN']}
         aList %answers:     {['a1'],['a2'],['a3'],...,['aN']}
-        hList %hints:       {['h1'],['h2'],['h3'],...,['hN']}
-        fList %formulas:    {['f1'],['f2'],['f3'],...,['fN']}
+        h1List %hint 1:     {['h1'],['h2'],['h3'],...,['hN']}
+        h2List %hint 2:     {['f1'],['f2'],['f3'],...,['fN']}
 		qNum = 0;
-        current = {}; % {['question'],['answerFunctionName'],['formuls'],['hints']} 
+        current = {}; % {['question'],['answerFunctionName'],['formulas'],['hints']} 
         game
     end        
      
@@ -23,6 +23,15 @@ classdef Questions < handle
             obj.game = g; %handle back to main battleship game
             % upload matfile or excel file with all questions and answers
             % populate the lists.
+            
+            filename = 'questions.xlsx';
+            if obj.game.level == Level.easy
+                obj.qList = xlsread(filename, 'easy', A); % filename, level sheet, range for column
+                obj.aList = xlsread(filename, 'easy', B);
+                obj.h1List = xlsread(filename, 'easy', C);
+                obj.h2List = xlsread(filename, 'easy', D);
+            end
+            
             
             obj.current = cell(4);
         end
