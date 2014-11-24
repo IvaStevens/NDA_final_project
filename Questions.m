@@ -28,15 +28,16 @@ classdef Questions < handle
             if obj.game.level == Level.Easy
                 % may need to add 'basic' after column range if using a
                 % Unix system
-                obj.qList = xlsread(filename, 'easy', 'A1:A10'); % filename, level sheet, column
-                obj.aList = xlsread(filename, 'easy', 'B1:B10');
-                obj.h1List = xlsread(filename, 'easy', 'C1:B10');
-                obj.h2List = xlsread(filename, 'easy', 'D1:D10');
+                [~,obj.qList,~] = xlsread(filename, 'easy', 'A1:A10'); % filename, level sheet, column
+                [~,obj.aList,~] = xlsread(filename, 'easy', 'B1:B10');
+                [~,obj.h1List,~] = xlsread(filename, 'easy', 'C1:B10');
+                [~,obj.h2List,~] = xlsread(filename, 'easy', 'D1:D10');
             end
             
 %             if obj.game.level == Level.Medium
 %                 % may need to add 'basic' after column range if using a
 %                 % Unix system
+                  % TODO: FORMAT [~,obj.qList,~]
 %                 obj.qList = xlsread(filename, 'medium', 'A1:A10'); % filename, level sheet, column
 %                 obj.aList = xlsread(filename, 'medium', 'B1:B');
 %                 obj.h1List = xlsread(filename, 'medium', 'C');
