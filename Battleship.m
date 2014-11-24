@@ -38,6 +38,21 @@ classdef Battleship < handle
             % Say GameOver ad show final score
         end
         
+        function str = getnextquest(obj)
+            str =  'Welcome to Battleship: Neuron';
+			%str = obj.faq.getNextQuestion;
+        end
+        
+        function out = checkans(obj, str)
+			obj.faq.setUserResponse(str); % write this. set new variable in Question function
+			check = obj.faq.answerQuestion;
+			if check
+				out = 'Correct!';
+			else
+				out = 'Sorry. Try again.';
+			end
+        end
+        
         function updateGuesses(obj, guess)
             % assert guess within range
             % assert guess not repeated
@@ -51,11 +66,11 @@ classdef Battleship < handle
             nrn = []; % neuron matrix
             [nLen, nWid] = size(nrn);
             n = sum(nrn > 0);
-            nrnMask = int(rot90(rot90(nrn == 0))); %1 denotes where it can be
+            nrnMask = int(rot90(rot90(nrn == 0))); %1 => where it can be
             f = find(nrn);
             m = zeros(bLen, bWid, n);
             for i = 1:n
-                temp = ones(bLen, bWid); % 1 denotes where the point could be
+                temp = ones(bLen, bWid); % 1 => where the point could be
                 pt = f(n);
                 top = ceil(pt/bWid);
                 
@@ -86,8 +101,8 @@ classdef Battleship < handle
                 nGes = length(obj.guesses);
                 for j = 1: nGes
                     if temp(obj.guesses(NGues)) ~= 0
-                        tp = ; %logic?
-                        lf = ; %logic?
+                        tp = 7; %logic?
+                        lf = 7; %logic?
                         temp(tp:tp+nLen-1,lf:lf+nWid-1) = nrnMask;
                     end
                 end

@@ -1,3 +1,2 @@
-Global OB;
-OB = Battleship;
-
+clear all
+projectGUI
