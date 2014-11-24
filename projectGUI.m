@@ -45,6 +45,8 @@ end
 % End initialization code - DO NOT EDIT
 
 
+
+
 % --- Executes just before projectGUI is made visible.
 function projectGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
@@ -53,9 +55,15 @@ function projectGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to projectGUI (see VARARGIN)
 
+% No idea where to initialize this - I keep getting errors that the
+% expression to the left of the equals sign is not a valid target. Also
+% can't put it at the top or it will screw with the function
+global OB;
+OB=test(1,1);
 
 % Use case to determine what question to put in the static text box.
-welcome = 'Hello! Welcome to Neuron Battleship... blah blah blah';
+welcome = OB.getnextquest(0);
+%welcome = 'Hello! Welcome to Neuron Battleship... blah blah blah';
 set(handles.text1,'string',welcome);
 
 % Do the same for the Notebook
@@ -70,7 +78,6 @@ guidata(hObject, handles);
 % UIWAIT makes projectGUI wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 
-
 % --- Outputs from this function are returned to the command line.
 function varargout = projectGUI_OutputFcn(hObject, eventdata, handles) 
 % varargout  cell array for returning output args (see VARARGOUT);
@@ -80,6 +87,8 @@ function varargout = projectGUI_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 
+%k=waitforbuttonpress - can put this in a loop so that the getpts func only 
+%runs when appropriate. I think it can go here? 
 [X,Y]=getpts(handles.axes1);
 varargout{2}=[X,Y];
 
@@ -97,9 +106,14 @@ function edit1_Callback(hObject, eventdata, handles)
 str1=get(hObject,'String');
 str2=str1{1};
 ansNum=str2num(str2);
-ansStr=sprintf('Your answer is %f. That is correct!', ansNum);
 
-set(handles.text1,'String',ansStr);
+%b.checkanswer(str2) - global that takes editbox answer and compares to
+%answer list. Sends back string to update text1.
+
+newText=OB.checkans(str2);
+%newText=sprintf(ansStr);
+
+set(handles.text1,'String',newText);
 
 % --- Executes during object creation, after setting all properties.
 function edit1_CreateFcn(hObject, eventdata, handles)

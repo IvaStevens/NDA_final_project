@@ -103,7 +103,8 @@ classdef Questions < handle
         % I want this function to parse the string response from the user
         % and evaluate it in matlab it if contains a division symbol. '\'
         % and otherwise just return the decimal value
-        function frac2num
+        function numResult = frac2num(str)
+            numResult = str2num(str);
         end
     end
 end
