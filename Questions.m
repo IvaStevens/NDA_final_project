@@ -28,7 +28,6 @@ classdef Questions < handle
             if obj.game.level == Level.Easy
                 % may need to add 'basic' after column range if using a
                 % Unix system
-<<<<<<< HEAD
                 [~,obj.qList,~] = xlsread(filename, 'easy', 'A1:A10'); % filename, level sheet, column
                 [~,obj.aList,~] = xlsread(filename, 'easy', 'B1:B10');
                 [~,obj.h1List,~] = xlsread(filename, 'easy', 'C1:B10');
@@ -54,35 +53,7 @@ classdef Questions < handle
 %                 obj.h1List = xlsread(filename, 'hard', 'C');
 %                 obj.h2List = xlsread(filename, 'hard', 'D');
 %             end
-=======
-                obj.qList = xlsread(filename, 'easy', 'A3:A40'); % filename, level sheet, column
-                obj.aList = xlsread(filename, 'easy', 'B3:B40');
-                obj.h1List = xlsread(filename, 'easy', 'C3:B40');
-                obj.h2List = xlsread(filename, 'easy', 'D3:D40');
-            end
-            
-             if obj.game.level == Level.Medium
-                 % may need to add 'basic' after column range if using a
-                 % Unix system
-                 obj.qList = xlsread(filename, 'medium', 'A3:A40'); % filename, level sheet, column
-                 obj.aList = xlsread(filename, 'medium', 'B3:B40');
-                 obj.h1List = xlsread(filename, 'medium', 'C3:C40');
-                 obj.h2List = xlsread(filename, 'medium', 'D3:D40');
-             end
-             
-             
-             if obj.game.level == Level.Hard
-                 % may need to add 'basic' after column range if using a
-                 % Unix system
-                 obj.qList = xlsread(filename, 'hard', 'A3:A40'); % filename, level sheet, column
-                 obj.aList = xlsread(filename, 'hard', 'B3:B40');
-                 obj.h1List = xlsread(filename, 'hard', 'C3:C40');
-                 obj.h2List = xlsread(filename, 'hard', 'D3:D40');
-             end
->>>>>>> 472817549825cf5a71ba501acbc3a3a062c609b1
-            
-            
-            
+              
             obj.current = cell(4);
         end
         
@@ -99,7 +70,7 @@ classdef Questions < handle
             obj.current(3) = obj.h1List(n);
             obj.current(4) = obj.h2List(n);
             obj.qNum = n;
-            q = getQuestion;
+            q = obj.getQuestion;
         end
         
         % Proably a cleaner way to handle these...
