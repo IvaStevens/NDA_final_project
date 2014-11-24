@@ -25,12 +25,34 @@ classdef Questions < handle
             % populate the lists.
             
             filename = 'questions.xlsx';
-            if obj.game.level == Level.easy
-                obj.qList = xlsread(filename, 'easy', 'A'); % filename, level sheet, column
-                obj.aList = xlsread(filename, 'easy', 'B');
-                obj.h1List = xlsread(filename, 'easy', 'C');
-                obj.h2List = xlsread(filename, 'easy', 'D');
+            if obj.game.level == Level.Easy
+                % may need to add 'basic' after column range if using a
+                % Unix system
+                obj.qList = xlsread(filename, 'easy', 'A3:A40'); % filename, level sheet, column
+                obj.aList = xlsread(filename, 'easy', 'B3:B40');
+                obj.h1List = xlsread(filename, 'easy', 'C3:B40');
+                obj.h2List = xlsread(filename, 'easy', 'D3:D40');
             end
+            
+             if obj.game.level == Level.Medium
+                 % may need to add 'basic' after column range if using a
+                 % Unix system
+                 obj.qList = xlsread(filename, 'medium', 'A3:A40'); % filename, level sheet, column
+                 obj.aList = xlsread(filename, 'medium', 'B3:B40');
+                 obj.h1List = xlsread(filename, 'medium', 'C3:C40');
+                 obj.h2List = xlsread(filename, 'medium', 'D3:D40');
+             end
+             
+             
+             if obj.game.level == Level.hard
+                 % may need to add 'basic' after column range if using a
+                 % Unix system
+                 obj.qList = xlsread(filename, 'hard', 'A3:A40'); % filename, level sheet, column
+                 obj.aList = xlsread(filename, 'hard', 'B3:B40');
+                 obj.h1List = xlsread(filename, 'hard', 'C3:C40');
+                 obj.h2List = xlsread(filename, 'hard', 'D3:D40');
+             end
+            
             
             
             obj.current = cell(4);
@@ -46,8 +68,8 @@ classdef Questions < handle
             end
             obj.current(1) = obj.qList(n); %Prolly a cleaner way to do this...
             obj.current(2) = obj.aList(n);
-            obj.current(3) = obj.hList(n);
-            obj.current(4) = obj.fList(n);
+            obj.current(3) = obj.h1List(n);
+            obj.current(4) = obj.h2List(n);
             obj.qNum = n;
             q = getQuestion;
         end

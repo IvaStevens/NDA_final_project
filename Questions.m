@@ -28,30 +28,30 @@ classdef Questions < handle
             if obj.game.level == Level.Easy
                 % may need to add 'basic' after column range if using a
                 % Unix system
-                obj.qList = xlsread(filename, 'easy', 'A1:A10'); % filename, level sheet, column
-                obj.aList = xlsread(filename, 'easy', 'B1:B10');
-                obj.h1List = xlsread(filename, 'easy', 'C1:B10');
-                obj.h2List = xlsread(filename, 'easy', 'D1:D10');
+                obj.qList = xlsread(filename, 'easy', 'A3:A40'); % filename, level sheet, column
+                obj.aList = xlsread(filename, 'easy', 'B3:B40');
+                obj.h1List = xlsread(filename, 'easy', 'C3:B40');
+                obj.h2List = xlsread(filename, 'easy', 'D3:D40');
             end
             
-%             if obj.game.level == Level.Medium
-%                 % may need to add 'basic' after column range if using a
-%                 % Unix system
-%                 obj.qList = xlsread(filename, 'medium', 'A1:A10'); % filename, level sheet, column
-%                 obj.aList = xlsread(filename, 'medium', 'B1:B');
-%                 obj.h1List = xlsread(filename, 'medium', 'C');
-%                 obj.h2List = xlsread(filename, 'medium', 'D');
-%             end
-%             
-%             
-%             if obj.game.level == Level.hard
-%                 % may need to add 'basic' after column range if using a
-%                 % Unix system
-%                 obj.qList = xlsread(filename, 'hard', 'A'); % filename, level sheet, column
-%                 obj.aList = xlsread(filename, 'hard', 'B');
-%                 obj.h1List = xlsread(filename, 'hard', 'C');
-%                 obj.h2List = xlsread(filename, 'hard', 'D');
-%             end
+             if obj.game.level == Level.Medium
+                 % may need to add 'basic' after column range if using a
+                 % Unix system
+                 obj.qList = xlsread(filename, 'medium', 'A3:A40'); % filename, level sheet, column
+                 obj.aList = xlsread(filename, 'medium', 'B3:B40');
+                 obj.h1List = xlsread(filename, 'medium', 'C3:C40');
+                 obj.h2List = xlsread(filename, 'medium', 'D3:D40');
+             end
+             
+             
+             if obj.game.level == Level.Hard
+                 % may need to add 'basic' after column range if using a
+                 % Unix system
+                 obj.qList = xlsread(filename, 'hard', 'A3:A40'); % filename, level sheet, column
+                 obj.aList = xlsread(filename, 'hard', 'B3:B40');
+                 obj.h1List = xlsread(filename, 'hard', 'C3:C40');
+                 obj.h2List = xlsread(filename, 'hard', 'D3:D40');
+             end
             
             
             
