@@ -44,6 +44,8 @@ else
 end
 % End initialization code - DO NOT EDIT
 
+global b;
+
 
 % --- Executes just before projectGUI is made visible.
 function projectGUI_OpeningFcn(hObject, eventdata, handles, varargin)
@@ -55,7 +57,8 @@ function projectGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 
 
 % Use case to determine what question to put in the static text box.
-welcome = 'Hello! Welcome to Neuron Battleship... blah blah blah';
+welcome = b.getquestion(1);
+%welcome = 'Hello! Welcome to Neuron Battleship... blah blah blah';
 set(handles.text1,'string',welcome);
 
 % Do the same for the Notebook
@@ -70,8 +73,6 @@ guidata(hObject, handles);
 % UIWAIT makes projectGUI wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 
-%b.getquestion - find where to put you.%%%%%%%%
-
 % --- Outputs from this function are returned to the command line.
 function varargout = projectGUI_OutputFcn(hObject, eventdata, handles) 
 % varargout  cell array for returning output args (see VARARGOUT);
@@ -81,6 +82,8 @@ function varargout = projectGUI_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 
+%k=waitforbuttonpress - can put this in a loop so that the getpts func only 
+%runs when appropriate. I think it can go here? 
 [X,Y]=getpts(handles.axes1);
 varargout{2}=[X,Y];
 
@@ -97,14 +100,15 @@ function edit1_Callback(hObject, eventdata, handles)
 
 str1=get(hObject,'String');
 str2=str1{1};
+ansNum=str2num(str2);
 
 %b.checkanswer(str2) - global that takes editbox answer and compares to
 %answer list. Sends back string to update text1.
 
-ansNum=str2num(str2);
-ansStr=sprintf('Your answer is %f. That is correct!', ansNum);
+newText=b.checkanswer(str2);
+%newText=sprintf(ansStr);
 
-set(handles.text1,'String',ansStr);
+set(handles.text1,'String',newText);
 
 % --- Executes during object creation, after setting all properties.
 function edit1_CreateFcn(hObject, eventdata, handles)
