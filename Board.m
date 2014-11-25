@@ -22,9 +22,9 @@ classdef Board < handle
             obj.board = brd;
         end
         
-        % 		function brd = getBoard(obj)
-        % 			return obj.brd
-        % 		end
+        		function brd = getBoard(obj)
+        			brd=obj.board;
+        		end
         
         %places neuron on the board
         function placeNeuron(obj,nrn)

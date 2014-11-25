@@ -74,6 +74,36 @@ set(handles.text2,'string','Notebook');
 % Choose default command line output for projectGUI
 handles.output = hObject;
 
+% Plot grid and neuron
+% I know it's not pretty but it's working.
+brd = OB.board.getBoard;
+shownBrd=zeros(size(brd));
+nrn = OB.neuron.getNeuron;
+
+bx=size(brd,2); nx=size(nrn,2);
+by=size(brd,1); ny=size(nrn,1);
+eXLabel=cell(1,(bx+1));
+for i=1:(bx+1)
+    eXLabel{i}=num2str(i-1);
+end
+
+eYLabel=cell(1,(by+1));
+for i=1:(by+1)
+    eYLabel{i}=num2str(i-1);
+end
+
+imagesc(shownBrd,'parent',handles.axes1);
+pbaspect([bx by 1]); %makes it look nice
+set(handles.axes1,'xtick',linspace(0.5,bx+0.5,bx+1),'ytick',linspace(0.5,by+0.5,by+1));
+set(handles.axes1,'XTickLabel',eXLabel,'YTickLabel',eYLabel);
+set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
+
+imagesc(nrn,'parent',handles.axes2);
+pbaspect([nx ny 1]); %makes it look nice
+set(handles.axes2,'xtick',linspace(0.5,nx+0.5,nx+1),'ytick',linspace(0.5,ny+0.5,ny+1));
+set(handles.axes2,'XTickLabel','','YTickLabel','');
+set(handles.axes2,'xgrid','on','ygrid','on','gridlinestyle','-');
+
 % Update handles structure
 guidata(hObject, handles);
 
