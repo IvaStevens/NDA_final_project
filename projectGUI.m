@@ -66,10 +66,10 @@ OB = Battleship;
 
 welcome = OB.getnextquest();
 %welcome = 'Hello! Welcome to Neuron Battleship... blah blah blah';
-set(handles.text1,'string',welcome);
+set(handles.text1,'string',welcome,'FontSize',12);
 
 % Do the same for the Notebook
-set(handles.text2,'string','Notebook');
+set(handles.text2,'string','Notebook','FontSize',12);
 
 % Choose default command line output for projectGUI
 handles.output = hObject;
