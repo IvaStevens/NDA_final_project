@@ -23,7 +23,7 @@ function varargout = projectGUI(varargin)
 
 % Edit the above text to modify the response to help projectGUI
 
-% Last Modified by GUIDE v2.5 23-Nov-2014 13:19:07
+% Last Modified by GUIDE v2.5 25-Nov-2014 11:52:16
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -66,10 +66,13 @@ OB = Battleship;
 
 welcome = OB.getnextquest();
 %welcome = 'Hello! Welcome to Neuron Battleship... blah blah blah';
-set(handles.text1,'string',welcome);
+set(handles.text1,'string',welcome,'FontSize',12);
 
 % Do the same for the Notebook
-set(handles.text2,'string','Notebook');
+set(handles.text2,'string','Notebook','FontSize',12);
+
+% And the push button
+set(handles.pushbutton2,'string','Continue');
 
 % Choose default command line output for projectGUI
 handles.output = hObject;
@@ -161,3 +164,10 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
+
+
+% --- Executes on button press in pushbutton2.
+function pushbutton2_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
