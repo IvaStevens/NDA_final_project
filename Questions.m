@@ -82,11 +82,11 @@ classdef Questions < handle
             a = obj.current(2);
         end
         
-        function h = getHint(obj)
+        function h = getHint1(obj)
             h = obj.current(3);
         end
         
-        function f = getFormula(obj)
+        function f = getHint2(obj)
             f = obj.current(4);
         end
         
