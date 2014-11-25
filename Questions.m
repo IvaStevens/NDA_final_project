@@ -28,10 +28,10 @@ classdef Questions < handle
             if obj.game.level == Level.Easy
                 % may need to add 'basic' after column range if using a
                 % Unix system
-                [~,obj.qList,~] = xlsread(filename, 'easy', 'A1:A10'); % filename, level sheet, column
-                [~,obj.aList,~] = xlsread(filename, 'easy', 'B1:B10');
-                [~,obj.h1List,~] = xlsread(filename, 'easy', 'C1:B10');
-                [~,obj.h2List,~] = xlsread(filename, 'easy', 'D1:D10');
+                [~,obj.qList,~] = xlsread(filename, 'easy', 'A3:A40'); % filename, level sheet, column
+                [~,obj.aList,~] = xlsread(filename, 'easy', 'B3:B40');
+                [~,obj.h1List,~] = xlsread(filename, 'easy', 'C3:C40');
+                [~,obj.h2List,~] = xlsread(filename, 'easy', 'D3:D40');
             end
             
 %             if obj.game.level == Level.Medium
@@ -61,7 +61,7 @@ classdef Questions < handle
         % the current values for things such like the hints, question
         function q = getNextQuestion(obj)
             n = obj.qNum + 1;
-            if n > len(alist)
+            if n > length(obj.aList)
                 q  = {};
                 return
             end
