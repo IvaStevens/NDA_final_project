@@ -69,7 +69,7 @@ welcome = OB.getnextquest();
 set(handles.text1,'string',welcome,'FontSize',12);
 
 % Do the same for the Notebook
-% set(handles.text2,'string','Notebook','FontSize',12);
+set(handles.text2,'string','Notebook','FontSize',12);
 
 % And the push buttons
 set(handles.pushbutton2,'string','Continue');
@@ -80,8 +80,7 @@ handles.output = hObject;
 
 % Notebook stuff
 notebookText=OB.Notebook.getText(OB.level);
-% notebookText='This is a test';
-set(handles.text2,'string',sprintf(['Notebook\n\n',notebookText]),'FontSize',11);
+set(handles.text2,'string',notebookText,'FontSize',11);
 
 % Plot grid and neuron
 % I know it's not pretty but it's working.
