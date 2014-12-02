@@ -59,6 +59,8 @@ function projectGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 % expression to the left of the equals sign is not a valid target. Also
 % can't put it at the top or it will screw with the function
 global OB;
+global hintNum
+hintNum=0;
 OB = Battleship;
 
 % Use case to determine what question to put in the static text box.
@@ -177,14 +179,16 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global hintNum
+%global qNum
 if hintNum > 0  %% Closes hint window after they move on from the question
     close(figure(2));
 else
+end
 global OB 
-str = OB.getnextquest();
+[str,qNum] = OB.getnextquest();
 set(handles.text1,'string',str,'FontSize',11);
 
-end
+
 
 
 % --- Executes on button press in pushbutton3.
@@ -194,6 +198,7 @@ function pushbutton3_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 global OB
 global hintNum
+%global qNum
 
 % questNum=    %% We may have to make this another global variable to be
 % passed between functions in the GUI. The thought is that it can keep
@@ -201,10 +206,10 @@ global hintNum
 % displays
  hintNum=1;
 if hintNum == 1   
-    hint=OB.getHint1
+    hint=OB.getHint1();
     hintNum=hintNum+1;
 else
-    hint=OB.getHint2
+    hint=OB.getHint2();
 end      %% Not actually working yet. This is what will call the appropriate hints,
 % please send them as a string.
 % hint='This is a test';

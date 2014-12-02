@@ -48,9 +48,9 @@ classdef Battleship < handle
             str = obj.faq.getHint2();
         end
         
-        function str = getnextquest(obj)
+        function [str,num] = getnextquest(obj)
             %str =  'Welcome to Battleship: Neuron';
-			str = obj.faq.getNextQuestion;
+			[str,num] = obj.faq.getNextQuestion;
         end
         
         function out = checkans(obj, str)
