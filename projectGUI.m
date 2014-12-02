@@ -202,17 +202,10 @@ global hintNum
 % displays
  hintNum=1;
 if hintNum == 1   
-<<<<<<< HEAD
     hint=OB.getHint1;
     hintNum=hintNum+1;
 else
     hint=OB.getHint2;
-=======
-    hint = OB.getHint1();
-    hintNum=hintNum+1;
-else
-    hint = OB.getHint2();
->>>>>>> ec50f50a9668c2b42e44cf1b8c86ffbc1708ebb2
 end      %% Not actually working yet. This is what will call the appropriate hints,
 % please send them as a string.
 % hint='This is a test';
