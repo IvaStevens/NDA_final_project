@@ -201,10 +201,10 @@ global hintNum
 % displays
  hintNum=1;
 if hintNum == 1   
-    hint=OB.getHint1(questNum)
+    hint=OB.getHint1
     hintNum=hintNum+1;
 else
-    hint=OB.getHint2(questNum)
+    hint=OB.getHint2
 end      %% Not actually working yet. This is what will call the appropriate hints,
 % please send them as a string.
 % hint='This is a test';

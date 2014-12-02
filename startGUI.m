@@ -102,7 +102,7 @@ selection=pmStr{get(hObject,'Value')};
 %disp(selection)
 guidata(handles.popupmenu1,selection);
 
-OB.level=selection;  %% I think this is the correct way to send the menu selection
+OB.setLevel(selection);  %% I think this is the correct way to send the menu selection
 % to the main code, but maybe not. Feel free to edit.
 % handles.output=selection;
 uiresume;

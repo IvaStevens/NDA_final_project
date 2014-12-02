@@ -13,17 +13,19 @@ classdef Battleship < handle
     methods
         %startup code
         function  obj = Battleship()
-            lvl = Level.Easy; 
+            lvl = Level.Easy; % Logic?
+            obj.score = 0;
+            obj.setLevel(lvl)
+        end
+        
+        function setLevel(obj,lvl) 
             obj.level = lvl;
             obj.board = Board(lvl);
             obj.neuron = Neuron(lvl);
             nrn = obj.neuron.getNeuron;
             obj.board.placeNeuron(nrn);
-            obj.score = 0;
-            %obj.Play
             obj.faq = Questions(obj);
         end
-        
         %This function should pull the next question/answer set
         %from the questions class. It will repetively call for these
         % such that they can be displayed.
@@ -38,6 +40,14 @@ classdef Battleship < handle
             % Say GameOver and show final score
         end
         
+        function str =  getHint1(obj)
+            str = obj.faq.getHint1();
+        end
+        
+        function str =  getHint2(obj)
+            str = obj.faq.getHint2();
+        end
+        
         function str = getnextquest(obj)
             %str =  'Welcome to Battleship: Neuron';
 			str = obj.faq.getNextQuestion;
@@ -48,7 +58,7 @@ classdef Battleship < handle
 			%check = obj.faq.answerQuestion;
             check = true;
 			if check
-				out = 'Correct!';
+				out = 'Correct! Press Continue';
             else
                 last = obj.faq.getQuestion(); %logic
 				out = ['Sorry. Try again. \n',last];
