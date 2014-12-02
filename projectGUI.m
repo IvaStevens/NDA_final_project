@@ -79,9 +79,9 @@ set(handles.pushbutton3,'string','Get Hint');
 handles.output = hObject;
 
 % Notebook stuff
-notebookText=OB.Notebook.getText(OB.level);
+%notebookText=OB.Notebook.getText(OB.level);
 % notebookText='This is a test';
-set(handles.text2,'string',sprintf(['Notebook\n\n',notebookText]),'FontSize',11);
+%set(handles.text2,'string',sprintf(['Notebook\n\n',notebookText]),'FontSize',11);
 
 % Plot grid and neuron
 % I know it's not pretty but it's working.
@@ -181,6 +181,10 @@ global hintNum
 if hintNum > 0  %% Closes hint window after they move on from the question
     close(figure(2));
 else
+global OB 
+str = OB.getnextquest();
+set(handles.text1,'string',str,'FontSize',11);
+
 end
 
 
