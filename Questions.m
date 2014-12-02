@@ -59,7 +59,7 @@ classdef Questions < handle
         
         % Determines what thte next question to display is and maintains
         % the current values for things such like the hints, question
-        function [q,n] = getNextQuestion(obj)
+        function q = getNextQuestion(obj)
             n = obj.qNum + 1;
             if n > length(obj.aList)
                 q  = {};
