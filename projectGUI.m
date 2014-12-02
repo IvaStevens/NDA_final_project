@@ -60,7 +60,6 @@ function projectGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 % can't put it at the top or it will screw with the function
 global OB;
 OB = Battleship;
-%OB=test(1,1);
 
 % Use case to determine what question to put in the static text box.
 
