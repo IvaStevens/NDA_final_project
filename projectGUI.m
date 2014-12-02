@@ -179,13 +179,12 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global hintNum
-%global qNum
 if hintNum > 0  %% Closes hint window after they move on from the question
     close(figure(2));
 else
 end
 global OB 
-[str,qNum] = OB.getnextquest();
+str = OB.getnextquest();
 set(handles.text1,'string',str,'FontSize',11);
 
 
@@ -198,7 +197,6 @@ function pushbutton3_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 global OB
 global hintNum
-%global qNum
 
 % questNum=    %% We may have to make this another global variable to be
 % passed between functions in the GUI. The thought is that it can keep
