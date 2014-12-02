@@ -176,15 +176,16 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global hintNum
-if hintNum > 0  %% Closes hint window after they move on from the question
-    close(figure(2));
-else
+%keyboard
+% global hintNum
+% if hintNum > 0  %% Closes hint window after they move on from the question
+%     close(figure(2));
+% else
 global OB 
 str = OB.getnextquest();
 set(handles.text1,'string',str,'FontSize',11);
 
-end
+% end
 
 
 % --- Executes on button press in pushbutton3.
@@ -201,10 +202,10 @@ global hintNum
 % displays
  hintNum=1;
 if hintNum == 1   
-    hint=OB.getHint1
+    hint=OB.getHint1;
     hintNum=hintNum+1;
 else
-    hint=OB.getHint2
+    hint=OB.getHint2;
 end      %% Not actually working yet. This is what will call the appropriate hints,
 % please send them as a string.
 % hint='This is a test';

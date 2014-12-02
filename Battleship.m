@@ -54,9 +54,9 @@ classdef Battleship < handle
         end
         
         function out = checkans(obj, str)
-			%obj.faq.setUserResponse(str); % write this. set new variable in Question function
-			%check = obj.faq.answerQuestion;
-            check = true;
+			obj.faq.setUserResponse(str); % write this. set new variable in Question function
+			check = obj.faq.answerQuestion;
+            %check = true;
 			if check
 				out = 'Correct! Press Continue';
             else

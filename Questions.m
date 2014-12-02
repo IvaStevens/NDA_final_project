@@ -16,6 +16,7 @@ classdef Questions < handle
 		qNum = 0;
         current = {}; % {['question'],['answerFunctionName'],['hint1'],['hint2']} 
         game
+        resp
     end        
      
 	methods
@@ -57,6 +58,9 @@ classdef Questions < handle
             obj.current = cell(4);
         end
         
+        function setUserResponse(obj,str)
+            obj.resp = str;
+        end
         % Determines what thte next question to display is and maintains
         % the current values for things such like the hints, question
         function q = getNextQuestion(obj)
@@ -94,8 +98,8 @@ classdef Questions < handle
             % this is the main code body for determining what the correct
             % answer to a given question is.
             
-            % funcName = getAnswer(obj); 
-            funcName = 'KeyPressed'; % for Debugging
+            funcName = getAnswer(obj); 
+            %funcName = 'KeyPressed'; % for Debugging
             funcptr = str2func(funcName);
             answer = funcptr(obj);
         end
@@ -109,6 +113,10 @@ classdef Questions < handle
         % Go to next question. null answer
         function anr = KeyPressed(obj)
             anr = true; 
+        end
+        
+        function anr = probNrn(obj)
+            anr = false; %LOGIC            
         end
         
         % Count squares of Neuron
