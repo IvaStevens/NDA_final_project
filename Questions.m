@@ -38,7 +38,6 @@ classdef Questions < handle
             if obj.game.level == Level.Medium
                 % may need to add 'basic' after column range if using a
                 % Unix system
-                %  TODO: FORMAT [~,obj.qList,~]
                 [~,obj.qList,~] = xlsread(filename, 'medium', 'A3:A40'); % filename, level sheet, column
                 [~,obj.aList,~] = xlsread(filename, 'medium', 'B3:B40');
                 [~,obj.h1List,~] = xlsread(filename, 'medium', 'C3:C40');
