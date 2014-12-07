@@ -194,7 +194,7 @@ function pushbutton3_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global OB
-global hintNum
+persistent hintNum
 
 % questNum=    %% We may have to make this another global variable to be
 % passed between functions in the GUI. The thought is that it can keep
