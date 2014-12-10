@@ -59,12 +59,9 @@ function projectGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 % expression to the left of the equals sign is not a valid target. Also
 % can't put it at the top or it will screw with the function
 global OB;
-OB = Battleship;
-
 % Use case to determine what question to put in the static text box.
 
 welcome = OB.getnextquest();
-%welcome = 'Hello! Welcome to Neuron Battleship... blah blah blah';
 set(handles.text1,'string',welcome,'FontSize',12);
 
 % Do the same for the Notebook
@@ -99,18 +96,27 @@ eYLabel=cell(1,(by+1));
 for i=1:(by+1)
     eYLabel{i}=num2str(i-1);
 end
+%map = [ .8 .8 1; 0 0 0; 1 1 1 ; 0 0 0; 1 1 1; 1 .8 .8 ; .8 .8 1; 1 1 1];
+%shownBrd(15) = 1;
+%shownBrd(12) = -1;
+%[map, shownBrd] = map_colorsB(shownBrd);
 
+%colormap(map)
 imagesc(shownBrd,'parent',handles.axes1);
 pbaspect([bx by 1]); %makes it look nice
 set(handles.axes1,'xtick',linspace(0.5,bx+0.5,bx+1),'ytick',linspace(0.5,by+0.5,by+1));
 set(handles.axes1,'XTickLabel',eXLabel,'YTickLabel',eYLabel);
 set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
 
+
+%mapn = [ 1 .8 .8; 1 1 .98 ; .8 .8 1; .1 .4 .4];
+
 imagesc(nrn,'parent',handles.axes2);
 pbaspect([nx ny 1]); %makes it look nice
 set(handles.axes2,'xtick',linspace(0.5,nx+0.5,nx+1),'ytick',linspace(0.5,ny+0.5,ny+1));
 set(handles.axes2,'XTickLabel','','YTickLabel','');
 set(handles.axes2,'xgrid','on','ygrid','on','gridlinestyle','-');
+
 
 % Update handles structure
 guidata(hObject, handles);
@@ -195,21 +201,25 @@ function pushbutton3_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 global OB
 persistent hintNum
-
+if isempty(hintNum)
+    hintNum = 1;
+end
 % questNum=    %% We may have to make this another global variable to be
 % passed between functions in the GUI. The thought is that it can keep
 % track of what question the student is on so that the appropriate hint
 % displays
- hintNum=1;
 if hintNum == 1   
     hint=OB.getHint1;
     hintNum=hintNum+1;
+    top = .8;
 else
     hint=OB.getHint2;
+    hintNum = 1;
+    top = .4;
 end      %% Not actually working yet. This is what will call the appropriate hints,
 % please send them as a string.
 % hint='This is a test';
 figure(2);  %%pop-up window will appear with hint
-text(0.2,0.7,hint);
+text(0.2,top,hint);
 axis off
 

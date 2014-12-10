@@ -42,8 +42,7 @@ classdef Questions < handle
                 [~,obj.aList,~] = xlsread(filename, 'medium', 'B3:B40');
                 [~,obj.h1List,~] = xlsread(filename, 'medium', 'C3:C40');
                 [~,obj.h2List,~] = xlsread(filename, 'medium', 'D3:D40');
-            end
-            
+            end            
             
             if obj.game.level == Level.Hard
                 % may need to add 'basic' after column range if using a
@@ -82,7 +81,7 @@ classdef Questions < handle
         end
         
         function a = getAnswer(obj)
-            a = obj.current(2);
+            a = obj.current{2};
         end
         
         function h = getHint1(obj)
@@ -92,7 +91,7 @@ classdef Questions < handle
         function f = getHint2(obj)
             f = obj.current(4);
         end
-        
+                
         function answer = answerQuestion(obj)
             % this is the main code body for determining what the correct
             % answer to a given question is.
@@ -114,8 +113,15 @@ classdef Questions < handle
             anr = true; 
         end
         
+        function anr = findNrn(obj)
+            anr = ginput2(5);
+        end
+        
         function anr = probNrn(obj)
             anr = false; %LOGIC            
+        end
+        
+        function anr = findAxnHil(obj)
         end
         
         % Count squares of Neuron

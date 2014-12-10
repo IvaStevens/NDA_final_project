@@ -13,12 +13,21 @@ classdef Battleship < handle
     methods
         %startup code
         function  obj = Battleship()
-            lvl = Level.Easy; % Logic?
+            %lvl = Level.Easy; % Logic?
             obj.score = 0;
-            obj.setLevel(lvl)
+            %obj.setLevel(lvl)
         end
         
-        function setLevel(obj,lvl) 
+        function setLevel(obj,lName)
+            if strcmp(lName,'Easy')
+                lvl = Level.Easy;
+            end
+            if strcmp(lName,'Medium')
+                lvl = Level.Medium;
+            end
+            if strcmp(lName,'Hard')
+                lvl = Level.Hard;
+            end
             obj.level = lvl;
             obj.board = Board(lvl);
             obj.neuron = Neuron(lvl);
@@ -50,19 +59,19 @@ classdef Battleship < handle
         
         function str = getnextquest(obj)
             %str =  'Welcome to Battleship: Neuron';
-			str = obj.faq.getNextQuestion;
+            str = obj.faq.getNextQuestion;
         end
         
         function out = checkans(obj, str)
-			obj.faq.setUserResponse(str); % write this. set new variable in Question function
-			check = obj.faq.answerQuestion;
+            obj.faq.setUserResponse(str); % write this. set new variable in Question function
+            check = obj.faq.answerQuestion;
             %check = true;
-			if check
-				out = 'Correct! Press Continue';
+            if check
+                out = 'Correct! Press Continue';
             else
                 last = obj.faq.getQuestion(); %logic
-				out = ['Sorry. Try again. \n',last];
-			end
+                out = ['Sorry. Try again. \n',last];
+            end
         end
         
         function updateGuesses(obj, guess)
@@ -75,7 +84,7 @@ classdef Battleship < handle
             % This function uses the design of the neuron, the size of the board, and previous guesses
             % to determine a matix of values that corresponds to the probability that the neuron is located
             % at any given spot.
-            nrn = []; % neuron matrix
+            nrn = abs(obj.neuron.getNeuron); % neuron matrix
             [nLen, nWid] = size(nrn);
             n = sum(nrn > 0);
             nrnMask = int(rot90(rot90(nrn == 0))); %1 => where it can be
@@ -112,9 +121,11 @@ classdef Battleship < handle
                 % remove space around guesses
                 nGes = length(obj.guesses);
                 for j = 1: nGes
-                    if temp(obj.guesses(NGues)) ~= 0
-                        tp = 1; %logic?
-                        lf = 1; %logic?
+                    if temp(obj.guesses(j)) ~= 0
+                        %gX = 
+                        %gY = 
+                        tp = -1; %logic?
+                        lf = -1; %logic?
                         temp(tp:tp+nLen-1,lf:lf+nWid-1) = nrnMask;
                     end
                 end

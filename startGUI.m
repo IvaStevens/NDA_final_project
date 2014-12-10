@@ -59,7 +59,8 @@ OB = Battleship;
 handles.output = hObject;
 
 % Set intro text
-intro=OB.getnextquest();
+%intro=OB.getnextquest();
+intro = 'Welcome to Neuron Battleship';
 set(handles.text1,'string',intro,'FontSize',11);
 
 % Update handles structure
@@ -102,8 +103,7 @@ selection=pmStr{get(hObject,'Value')};
 %disp(selection)
 guidata(handles.popupmenu1,selection);
 
-OB.setLevel(selection);  %% I think this is the correct way to send the menu selection
-% to the main code, but maybe not. Feel free to edit.
+OB.setLevel(selection);  
 % handles.output=selection;
 uiresume;
 
