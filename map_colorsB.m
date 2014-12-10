@@ -5,7 +5,7 @@ function [ map, brd ] = map_colorsB( board )
     if length(c) >= 3 %good
         map = [ .8 .8 1; 0 0 0; 1 1 1 ; 0 0 0; 1 1 1; 1 .8 .8 ; .8 .8 1; 0 0 0];
         brd = board;
-    elseif length(c) == 2 && max(c) == 0 %work
+    elseif length(c) == 2 && max(c) == 0 
         map = [ .8 .8 1; 0 0 0; 1 1 1 ; 0 0 0; 1 1 1; 1 .8 .8 ; .8 .8 1; 1 1 1];
         brd = ~board;
     elseif length(c) == 2 && max(c) > 0

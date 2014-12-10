@@ -97,11 +97,11 @@ for i=1:(by+1)
     eYLabel{i}=num2str(i-1);
 end
 %map = [ .8 .8 1; 0 0 0; 1 1 1 ; 0 0 0; 1 1 1; 1 .8 .8 ; .8 .8 1; 1 1 1];
-%shownBrd(15) = 1;
+shownBrd(15) = 1;
 %shownBrd(12) = -1;
-%[map, shownBrd] = map_colorsB(shownBrd);
+[map, shownBrd] = map_colorsB(shownBrd);
 
-%colormap(map)
+colormap(map)
 imagesc(shownBrd,'parent',handles.axes1);
 pbaspect([bx by 1]); %makes it look nice
 set(handles.axes1,'xtick',linspace(0.5,bx+0.5,bx+1),'ytick',linspace(0.5,by+0.5,by+1));
@@ -208,6 +208,7 @@ end
 % passed between functions in the GUI. The thought is that it can keep
 % track of what question the student is on so that the appropriate hint
 % displays
+ginput2(1) %LOGIC
 if hintNum == 1   
     hint=OB.getHint1;
     hintNum=hintNum+1;
