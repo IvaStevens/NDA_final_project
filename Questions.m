@@ -1,26 +1,26 @@
 classdef Questions < handle
-% This class is responsible for observing teh users response and determinig
-% if it is correct by calculating the correct response.
-% During main game play of the 'hard' level this class will obtain the
-% probability distributions for each square and report back to the
-% Battleship class what the user guessed such that it can change the color
-% of the squares depending on if the guess was good or not.
-% Otherwise this class will return 'true' or 'false' to the Battleship class
-% such thhat the player's score can be updated and teh next question can be
-% asked
+    % This class is responsible for observing teh users response and determinig
+    % if it is correct by calculating the correct response.
+    % During main game play of the 'hard' level this class will obtain the
+    % probability distributions for each square and report back to the
+    % Battleship class what the user guessed such that it can change the color
+    % of the squares depending on if the guess was good or not.
+    % Otherwise this class will return 'true' or 'false' to the Battleship class
+    % such thhat the player's score can be updated and teh next question can be
+    % asked
     properties
         qList %questions:   {['q1'],['q2'],['q3'],...,['qN']}
         aList %answers:     {['a1'],['a2'],['a3'],...,['aN']}
         h1List %hint 1:     {['h1'],['h2'],['h3'],...,['hN']}
         h2List %hint 2:     {['f1'],['f2'],['f3'],...,['fN']}
-		qNum = 0;
-        current = {}; % {['question'],['answerFunctionName'],['hint1'],['hint2']} 
+        qNum = 0;
+        current = {}; % {['question'],['answerFunctionName'],['hint1'],['hint2']}
         game
         resp
-    end        
-     
-	methods
-		function obj = Questions(g)
+    end
+    
+    methods
+        function obj = Questions(g)
             obj.game = g; %handle back to main battleship game
             % upload matfile or excel file with all questions and answers
             % populate the lists.
@@ -42,7 +42,7 @@ classdef Questions < handle
                 [~,obj.aList,~] = xlsread(filename, 'medium', 'B3:B40');
                 [~,obj.h1List,~] = xlsread(filename, 'medium', 'C3:C40');
                 [~,obj.h2List,~] = xlsread(filename, 'medium', 'D3:D40');
-            end            
+            end
             
             if obj.game.level == Level.Hard
                 % may need to add 'basic' after column range if using a
@@ -52,7 +52,7 @@ classdef Questions < handle
                 [~,obj.h1List,~] = xlsread(filename, 'hard', 'C3:C40');
                 [~,obj.h2List,~] = xlsread(filename, 'hard', 'D3:D40');
             end
-              
+            
             obj.current = cell(4);
         end
         
@@ -91,12 +91,11 @@ classdef Questions < handle
         function f = getHint2(obj)
             f = obj.current(4);
         end
-                
+        
         function answer = answerQuestion(obj)
             % this is the main code body for determining what the correct
             % answer to a given question is.
-            
-            funcName = getAnswer(obj); 
+            funcName = getAnswer(obj);
             %funcName = 'KeyPressed'; % for Debugging
             funcptr = str2func(funcName);
             answer = funcptr(obj);
@@ -110,7 +109,7 @@ classdef Questions < handle
     methods
         % Go to next question. null answer
         function anr = KeyPressed(obj)
-            anr = true; 
+            anr = true;
         end
         
         function anr = findNrn(obj)
@@ -118,15 +117,35 @@ classdef Questions < handle
         end
         
         function anr = probNrn(obj)
-            anr = false; %LOGIC            
+            anr = false; %LOGIC
         end
         
         function anr = findAxnHil(obj)
         end
         
+        function anr = clickable(obj)
+            %corrAnr = obj.game.Somehting;  %LOGIC
+            corrAnr = [1 2 3]; %Logic
+            l = length(corrAnr);
+            temp = [];
+            old = obj.game.board.board;
+            while length(temp) ~= l
+                [x,y] = ginput2(1);
+                guess = convertGuess(x,y);
+                if ismember(guess,corrAnr) && ~ismember(guess,temp)
+                    temp = [temp,guess];
+                    %show correct guesses
+                    obj.game.board.board(guess) = 1; %Logic does screen refresh?
+                end
+            end
+            %reset board
+            obj.game.board.board = old;
+            anr = true;
+        end
+        
         % Count squares of Neuron
         function anr = NeuronSize(obj)
-            corrAns = sum(obj.game.neuron.getNeuron);    
+            corrAns = sum(obj.game.neuron.getNeuron);
             userAns = frac2num(); % Logic
             anr = corrAns == userAns;
         end
@@ -141,6 +160,32 @@ classdef Questions < handle
         
     end
     
+    %functions for Medium Level
+    methods
+    end
+    %functions for Hard questions
+    methods
+        % Question set called at most 15 times to find the nrn
+        % 1) ask to click location
+        % 2) ask to calculate probability nrn is there
+        %    told if nrn is there
+        %    set variable if entire nrn found to end game
+        %    edit shownBoard
+        function anr = hardGame1(obj)
+            % ask to click location
+            [x,y] = ginput2(1);
+            I = convertGuess(x,y);
+            % change color for point of current guess
+        end
+        function anr = hardGame2(obj)
+            % ask to calculate probability nrn is there
+            
+            % told if nrn is there
+            % set variable if entire nrn found to end game
+            % edit shownBoard
+        end
+    end
+    
     %Various helper functions
     methods
         % I want this function to parse the string response from the user
@@ -148,6 +193,11 @@ classdef Questions < handle
         % and otherwise just return the decimal value
         function numResult = frac2num(str)
             numResult = str2num(str);
+        end
+        
+        function I = convertGuess(x,y)
+            %function takes the x,y location and returns the index number for
+            %the board square that it corresponds to.
         end
     end
 end
