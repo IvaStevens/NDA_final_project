@@ -195,9 +195,11 @@ classdef Questions < handle
             numResult = str2num(str);
         end
         
-        function I = convertGuess(x,y)
+        function I = convertGuess(x, y)
             %function takes the x,y location and returns the index number for
             %the board square that it corresponds to.
+            [r, c] = size(obj.game.board);
+            I = round(x) + (round(y)-1) * c;
         end
     end
 end
