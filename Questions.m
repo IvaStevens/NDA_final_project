@@ -95,7 +95,7 @@ classdef Questions < handle
         function answer = answerQuestion(obj)
             % this is the main code body for determining what the correct
             % answer to a given question is.
-            funcName = getAnswer(obj);
+            funcName = strtrim(getAnswer(obj));
             %funcName = 'KeyPressed'; % for Debugging
             funcptr = str2func(funcName);
             answer = funcptr(obj);
