@@ -208,8 +208,7 @@ end
 % passed between functions in the GUI. The thought is that it can keep
 % track of what question the student is on so that the appropriate hint
 % displays
-ginput2(1) %LOGIC
-if hintNum == 1   
+if hintNum == 1       
     hint=OB.getHint1;
     hintNum=hintNum+1;
     top = .8;
