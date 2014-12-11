@@ -29,19 +29,19 @@ classdef Questions < handle
             if obj.game.level == Level.Easy
                 % may need to add 'basic' after column range if using a
                 % Unix system
-                [~,obj.qList,~] = xlsread(filename, 'easy', 'A3:A40', 'basic'); % filename, level sheet, column
-                [~,obj.aList,~] = xlsread(filename, 'easy', 'B3:B40', 'basic');
-                [~,obj.h1List,~] = xlsread(filename, 'easy', 'C3:C40', 'basic');
-                [~,obj.h2List,~] = xlsread(filename, 'easy', 'D3:D40', 'basic');
+                [~,obj.qList,~] = xlsread(filename, 'easy', 'A3:A39', 'basic'); % filename, level sheet, column
+                [~,obj.aList,~] = xlsread(filename, 'easy', 'B3:B39', 'basic');
+                [~,obj.h1List,~] = xlsread(filename, 'easy', 'C3:C39', 'basic');
+                [~,obj.h2List,~] = xlsread(filename, 'easy', 'D3:D39', 'basic');
             end
             
             if obj.game.level == Level.Medium
                 % may need to add 'basic' after column range if using a
                 % Unix system
-                [~,obj.qList,~] = xlsread(filename, 'medium', 'A3:A40'); % filename, level sheet, column
-                [~,obj.aList,~] = xlsread(filename, 'medium', 'B3:B40');
-                [~,obj.h1List,~] = xlsread(filename, 'medium', 'C3:C40');
-                [~,obj.h2List,~] = xlsread(filename, 'medium', 'D3:D40');
+                [~,obj.qList,~] = xlsread(filename, 'medium', 'A3:A32'); % filename, level sheet, column
+                [~,obj.aList,~] = xlsread(filename, 'medium', 'B3:B32');
+                [~,obj.h1List,~] = xlsread(filename, 'medium', 'C3:C32');
+                [~,obj.h2List,~] = xlsread(filename, 'medium', 'D3:D32');
             end
             
             if obj.game.level == Level.Hard
@@ -228,8 +228,8 @@ classdef Questions < handle
         
         function anr = probAxonDendrite(obj)
             ourNrn = obj.game.neuron.getNeuron;
-            [x, y] = size(ourNrn);
-            if str2num(obj.resp) == (sum(ourNrn(:)==-1) + sum(ourNrn(:)==1))/(x * y - sum(ourNrn(:)==0))
+            [x, y] = size(obj.game.board.board);
+            if str2num(obj.resp) == (sum(ourNrn(:)==-1) + sum(ourNrn(:)==1))/(x * y)
                 anr = true;
             else
                 anr = false;
