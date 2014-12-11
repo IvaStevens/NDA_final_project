@@ -59,13 +59,11 @@ function projectGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 % expression to the left of the equals sign is not a valid target. Also
 % can't put it at the top or it will screw with the function
 global OB;
-global eXLabel;
-global eYLabel;
 global contNum
 % Use case to determine what question to put in the static text box.
 contNum=OB.contNum;
 welcome = OB.getnextquest();
-set(handles.text1,'string',welcome,'FontSize',12);
+set(handles.text1,'string',welcome);
 
 % Do the same for the Notebook
 % set(handles.text2,'string','Notebook','FontSize',12);
@@ -92,15 +90,8 @@ nrn = OB.neuron.getNeuron;
 
 bx=size(brd,2); nx=size(nrn,2);
 by=size(brd,1); ny=size(nrn,1);
-eXLabel=cell(1,(bx+1));
-for i=1:(bx+1)
-    eXLabel{i}=num2str(i-1);
-end
 
-eYLabel=cell(1,(by+1));
-for i=1:(by+1)
-    eYLabel{i}=num2str(i-1);
-end
+
 
 %map = [ .8 .8 1; 0 0 0; 1 1 1 ; 0 0 0; 1 1 1; 1 .8 .8 ; .8 .8 1; 1 1 1];
 map=OB.board.getMap;
@@ -113,7 +104,7 @@ imagesc(shownBrd,'parent',handles.axes1);
 colormap(map)
 pbaspect(handles.axes1,[bx by 1]); %makes it look nice
 set(handles.axes1,'xtick',linspace(0.5,bx+0.5,bx+1),'ytick',linspace(0.5,by+0.5,by+1));
-set(handles.axes1,'XTickLabel',eXLabel,'YTickLabel',eYLabel);
+set(handles.axes1,'XTickLabel','','YTickLabel','');
 set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
 freezeColors(handles.axes1);
 
@@ -163,8 +154,6 @@ function edit1_Callback(hObject, eventdata, handles)
 %        str2double(get(hObject,'String')) returns contents of edit1 as a double
 
 global OB;
-global eXLabel;
-global eYLabel;
 
 % updates board
 shownBrd=OB.board.getShown;
@@ -172,7 +161,7 @@ bx=size(shownBrd,2); by=size(shownBrd,1);
 imagesc(shownBrd,'parent',handles.axes1);
 pbaspect(handles.axes1,[bx by 1]); %makes it look nice
 set(handles.axes1,'xtick',linspace(0.5,bx+0.5,bx+1),'ytick',linspace(0.5,by+0.5,by+1));
-set(handles.axes1,'XTickLabel',eXLabel,'YTickLabel',eYLabel);
+set(handles.axes1,'XTickLabel','','YTickLabel','');
 set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
 
 str1=get(hObject,'String');
@@ -189,6 +178,15 @@ newText=OB.checkans(str2);
 notebookText=OB.notebook.getText;
 Ntxt=sprintf(['Notebook\n\n',notebookText]);
 set(handles.text2,'string',Ntxt);
+
+% neuron board stuff
+nrn = OB.neuron.getNeuron;
+imagesc(nrn,'parent',handles.axes2);
+nx=size(nrn,2); ny=size(nrn,1);
+pbaspect(handles.axes2,[nx ny 1]); %makes it look nice
+set(handles.axes2,'xtick',linspace(0.5,nx+0.5,nx+1),'ytick',linspace(0.5,ny+0.5,ny+1));
+set(handles.axes2,'XTickLabel','','YTickLabel','');
+set(handles.axes2,'xgrid','on','ygrid','on','gridlinestyle','-');
 
 set(handles.text1,'String',newText);
 
@@ -217,8 +215,6 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 %     close(figure(2));
 % else
 global OB 
-global eXLabel;
-global eYLabel;
 global contNum;
 %contNum=105; did this to test game over figure
 
@@ -230,11 +226,11 @@ bx=size(shownBrd,2); by=size(shownBrd,1);
 imagesc(shownBrd,'parent',handles.axes1);
 pbaspect(handles.axes1,[bx by 1]); %makes it look nice
 set(handles.axes1,'xtick',linspace(0.5,bx+0.5,bx+1),'ytick',linspace(0.5,by+0.5,by+1));
-set(handles.axes1,'XTickLabel',eXLabel,'YTickLabel',eYLabel);
+set(handles.axes1,'XTickLabel','','YTickLabel','');
 set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
 
 str = OB.getnextquest();
-set(handles.text1,'string',str,'FontSize',11);
+set(handles.text1,'string',str);
 
 if contNum == 102    %number of times they should hit continue to go through all the questions in the excel file
     figure(3);
@@ -290,8 +286,7 @@ set(gca,'XTickLabel','','YTickLabel','')
 
 function clickableCall(hObject,eventdata, handles)
 global OB
-global eXLabel
-global eYLabel
+
 
 %disp('here');
 if OB.click == true
@@ -310,7 +305,7 @@ bx=size(shownBrd,2); by=size(shownBrd,1);
 imagesc(shownBrd,'parent',handles.axes1);
 pbaspect(handles.axes1,[bx by 1]); %makes it look nice
 set(handles.axes1,'xtick',linspace(0.5,bx+0.5,bx+1),'ytick',linspace(0.5,by+0.5,by+1));
-set(handles.axes1,'XTickLabel',eXLabel,'YTickLabel',eYLabel);
+set(handles.axes1,'XTickLabel','','YTickLabel','');
 set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
 
 end
