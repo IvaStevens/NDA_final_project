@@ -87,12 +87,8 @@ classdef Battleship < handle
                 end
             else
                 last = obj.faq.getQuestion(); %logic
-<<<<<<< HEAD
                 out = ['Sorry. Try again. ',last];                
                 obj.score = scr - 2;
-=======
-                out = ['Sorry. Try again.',last];
->>>>>>> a657fd08781c5defb9088b6b0990e43df47e104b
             end
         end
         

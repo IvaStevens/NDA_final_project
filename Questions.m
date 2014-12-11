@@ -241,9 +241,7 @@ classdef Questions < handle
         end
         
         function anr = probAxonDendrite(obj)
-            ourNrn = obj.game.neuron.getNeuron;
-            [x, y] = size(obj.game.board.board);
-            if str2num(obj.resp) == (sum(ourNrn(:)==-1) + sum(ourNrn(:)==1))/(x * y)
+            if str2num(obj.resp) == 6/7
                 anr = true;
             else
                 anr = false;
@@ -281,8 +279,8 @@ classdef Questions < handle
             obj.game.guesses = [];
             [a,b] = size(obj.game.board.board);
             nElec =  a*b;%number of electrodes
-            corrAnr = length(obj.game.getAxnLoc) / nElec
-            res = str2num(obj.resp)
+            corrAnr = length(obj.game.getAxnLoc) / nElec;
+            res = str2num(obj.resp);
             if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
                 anr = true;
             else
@@ -367,14 +365,15 @@ classdef Questions < handle
             end
             % if part of the nrn was found let them click around until the
             ind = find(obj.game.board.board); %indices of nrn
+            
             if sum(ismember(ind,obj.game.guesses)) > 0
                 while sum(ismember(ind,obj.game.guesses)) < length(ind)
-                    I = obj.game.guesses(end);
-                    if obj.game.board.board(I)
-                        obj.game.board.shown(I) = .5;
-                    else
-                        obj.game.board.shown(I) = .25;
-                    end
+%                     I = obj.game.guesses(end);
+%                     if obj.game.board.board(I)
+%                         obj.game.board.shown(I) = .5;
+%                     else
+%                         obj.game.board.shown(I) = .25;
+%                     end
                     pause(.001)
                 end
             end
@@ -415,7 +414,7 @@ classdef Questions < handle
             nrn = find(obj.game.board.board); %Logic
             nlen = length(nrn);
             if sum(ismember(nrn,obj.game.guesses)) == nlen
-                obj.game.contNum = 106; %Logic
+                obj.game.contNum = 102; %Logic
             end
             % edit shownBoard
             anr = true;

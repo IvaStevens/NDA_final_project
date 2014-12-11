@@ -1,6 +1,6 @@
-%clear all;
+clear all;
 close all;clc;
-rng(2)
+rng(2);
 response=startGUI;
 % Will need to delay closing startGUI and calling projectGUI until after
 % the user has made a level selection

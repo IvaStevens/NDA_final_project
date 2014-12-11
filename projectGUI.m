@@ -28,11 +28,11 @@ function varargout = projectGUI(varargin)
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
-                   'gui_Singleton',  gui_Singleton, ...
-                   'gui_OpeningFcn', @projectGUI_OpeningFcn, ...
-                   'gui_OutputFcn',  @projectGUI_OutputFcn, ...
-                   'gui_LayoutFcn',  [] , ...
-                   'gui_Callback',   []);
+    'gui_Singleton',  gui_Singleton, ...
+    'gui_OpeningFcn', @projectGUI_OpeningFcn, ...
+    'gui_OutputFcn',  @projectGUI_OutputFcn, ...
+    'gui_LayoutFcn',  [] , ...
+    'gui_Callback',   []);
 if nargin && ischar(varargin{1})
     gui_State.gui_Callback = str2func(varargin{1});
 end
@@ -138,7 +138,7 @@ guidata(hObject, handles);
 % uiwait(handles.figure1);
 
 % --- Outputs from this function are returned to the command line.
-function varargout = projectGUI_OutputFcn(hObject, eventdata, handles) 
+function varargout = projectGUI_OutputFcn(hObject, eventdata, handles)
 % varargout  cell array for returning output args (see VARARGOUT);
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -146,8 +146,8 @@ function varargout = projectGUI_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 
-%k=waitforbuttonpress - can put this in a loop so that the getpts func only 
-%runs when appropriate. I think it can go here? 
+%k=waitforbuttonpress - can put this in a loop so that the getpts func only
+%runs when appropriate. I think it can go here?
 % [X,Y]=getpts(handles.axes1);
 % varargout{2}=[X,Y];
 
@@ -216,7 +216,7 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 % if hintNum > 0  %% Closes hint window after they move on from the question
 %     close(figure(2));
 % else
-global OB 
+global OB
 global eXLabel;
 global eYLabel;
 global contNum;
@@ -248,7 +248,7 @@ if contNum == 102    %number of times they should hit continue to go through all
     title(sprintf('Game Over! Your score is %d',score),'Fontsize',16);
 else
 end
-    
+
 % end
 
 
@@ -266,7 +266,7 @@ end
 % passed between functions in the GUI. The thought is that it can keep
 % track of what question the student is on so that the appropriate hint
 % displays
-if hintNum == 1       
+if hintNum == 1
     hint=OB.getHint1;
     hintNum=hintNum+1;
     top = .8;
@@ -295,27 +295,36 @@ global eYLabel
 
 %disp('here');
 if OB.click == true
-%pos = get(hObject,'CurrentPoint')
-%x = pos(1);
-%y = pos(2);
-[x,y] = ginput2(1);
-I = OB.faq.convertGuess(x,y);
-if ~ismember(I, OB.guesses)
-OB.guesses = [OB.guesses,I];
-end
-
-% updates board
-if OB.level == Level.Hard
-    OB.board.shown(I) = -1;
-end
-
-shownBrd=OB.board.getShown;
-bx=size(shownBrd,2); by=size(shownBrd,1);
-imagesc(shownBrd,'parent',handles.axes1);
-pbaspect(handles.axes1,[bx by 1]); %makes it look nice
-set(handles.axes1,'xtick',linspace(0.5,bx+0.5,bx+1),'ytick',linspace(0.5,by+0.5,by+1));
-set(handles.axes1,'XTickLabel',eXLabel,'YTickLabel',eYLabel);
-set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
-
+    %pos = get(hObject,'CurrentPoint')
+    %x = pos(1);
+    %y = pos(2);
+    [x,y] = ginput2(1);
+    I = OB.faq.convertGuess(x,y);
+    if ~ismember(I, OB.guesses)
+        OB.guesses = [OB.guesses,I];
+    end
+    
+    % updates board
+    if OB.level == Level.Hard
+        OB.board.shown(I) = -1;
+        %ind = find(OB.board.board);
+        %if sum(ismember(ind,OB.guesses)) > 0
+            I = OB.guesses(end);
+            if OB.board.board(I)
+                OB.board.shown(I) = .5;
+            else
+                OB.board.shown(I) = -.5;
+            end
+        %end
+    end
+    
+    shownBrd=OB.board.getShown;
+    bx=size(shownBrd,2); by=size(shownBrd,1);
+    imagesc(shownBrd,'parent',handles.axes1);
+    pbaspect(handles.axes1,[bx by 1]); %makes it look nice
+    set(handles.axes1,'xtick',linspace(0.5,bx+0.5,bx+1),'ytick',linspace(0.5,by+0.5,by+1));
+    set(handles.axes1,'XTickLabel',eXLabel,'YTickLabel',eYLabel);
+    set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
+    
 end
 
