@@ -122,8 +122,8 @@ classdef Battleship < handle
                 nGes = length(obj.guesses);
                 for j = 1: nGes
                     if temp(obj.guesses(j)) ~= 0
-                        %gX = 
-                        %gY = 
+                        %gX =
+                        %gY =
                         tp = -1; %logic?
                         lf = -1; %logic?
                         temp(tp:tp+nLen-1,lf:lf+nWid-1) = nrnMask;
@@ -146,11 +146,67 @@ classdef Battleship < handle
             a = H/uni;
         end
         
-        function A = hillock_locations(obj)
+        function A = getAxnLoc(obj)
             % returns boolean matrix that refernces whether or not the axon
             % hillock could be here
             % calculated by considering size of matrix and whether or not
             % the locations guessed would barr this loctation
+            nrn = abs(obj.neuron.getNeuron); % neuron matrix
+            [nLen, nWid] = size(nrn);
+            n = sum(nrn > 0);
+            nrnMask = int(rot90(rot90(nrn == 0))); %1 => where it can be
+            f = find(nrn);
+            m = zeros(bLen, bWid, n);
+            for i = 1:n
+                temp = ones(bLen, bWid); % 1 => where the point could be
+                pt = f(n);
+                top = ceil(pt/bWid);
+                
+                % remove top row if necessary
+                if top ~= 1
+                    temp(1:top-1,:) = 0;
+                end
+                
+                % remove bottom row if necessary
+                if top ~= bLen
+                    bot = nLen-top;
+                    temp(bLen-(bot-1):bLen,:) = 0;
+                end
+                
+                % remove left side
+                lft = mod(pt,nWid);
+                if left ~= 1
+                    temp(:,1:lft-1) = 0;
+                end
+                
+                % remove right side
+                if lft ~= nWid
+                    rgt = nWid - lft;
+                    temp(:, bWid - (rgt - 1): bWid) = 0;
+                end
+                
+                % remove space around guesses
+                nGes = length(obj.guesses);
+                if nGes > 0
+                    for j = 1: nGes
+                        if temp(obj.guesses(j)) ~= 0
+                            gX = mod(j,bWid);
+                            gY = ceil(j/bWid);
+                            k = nrn == 2;
+                            nX = mod(k,nWid);
+                            nY = ceil(k/nWid);
+                            tp = gX + nX -1; %logic?
+                            lf = gY + nY -1; %logic?
+                            temp(tp:tp+nLen-1,lf:lf+nWid-1)...
+                                = temp(tp:tp+nLen-1,lf:lf+nWid-1)+ nrnMask;
+                        end
+                    end
+                end
+                m(:,:,i) = temp;
+            end
+            s = sum(m,3);
+            tot = sum(sum(m));
+            prob = s/tot;
         end
     end
     

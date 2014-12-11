@@ -95,7 +95,7 @@ classdef Questions < handle
         function answer = answerQuestion(obj)
             % this is the main code body for determining what the correct
             % answer to a given question is.
-            funcName = getAnswer(obj);
+            funcName = strtrim(getAnswer(obj));
             %funcName = 'KeyPressed'; % for Debugging
             funcptr = str2func(funcName);
             answer = funcptr(obj);
@@ -119,10 +119,7 @@ classdef Questions < handle
         function anr = probNrn(obj)
             anr = false; %LOGIC
         end
-        
-        function anr = findAxnHil(obj)
-        end
-        
+                
         function anr = clickable(obj)
             %corrAnr = obj.game.Somehting;  %LOGIC
             corrAnr = [1 2 3]; %Logic
@@ -162,7 +159,45 @@ classdef Questions < handle
     
     %functions for Medium Level
     methods
+        function anr = findAxnHil(obj)
+            obj.game.guesses = [];
+            corrAnr = sort(obj.game.getAxnLoc); %Logic, write this
+            temp = [];
+            %old = obj.game.board.board;
+            while temp ~= corrAnr
+                [x,y] = ginput2(1);
+                I = Questions.convertGuess(x,y);
+                if ismemeber(I,corrAnr) && ~ismember(I, temp)
+                    temp = [temp,I];
+                    temp = sort(temp);
+                    %change color of board
+                    obj.game.board.board(I) = 1;
+                end
+            end
+            %reset old board
+            %obj.game.board.board = old;
+            anr = true;
+        end
+        function anr = probAxnHil(obj)
+            [a,b] = size(obj.game.borad.board);
+            nElec =  a*b;%number of electrodes
+            corrAnr = sum(obj.game.getAxnLoc) / nElec;
+            if obj.game.resp == corrAnr %LOGIC
+                anr = true;
+            else
+                anr = false;
+            end
+        end
+        function anr = probBehind(obj)
+            corrAnr = 1/sum(obj.game.getAxnLoc);
+            if obj.game.resp == corrAnr %LOGIC
+                anr = true;
+            else
+                anr = false;
+            end
+        end
     end
+    
     %functions for Hard questions
     methods
         % Question set called at most 15 times to find the nrn
@@ -187,7 +222,7 @@ classdef Questions < handle
     end
     
     %Various helper functions
-    methods
+    methods (Static)
         % I want this function to parse the string response from the user
         % and evaluate it in matlab it if contains a division symbol. '\'
         % and otherwise just return the decimal value
@@ -195,9 +230,11 @@ classdef Questions < handle
             numResult = str2num(str);
         end
         
-        function I = convertGuess(x,y)
+        function I = convertGuess(x, y)
             %function takes the x,y location and returns the index number for
             %the board square that it corresponds to.
+            [r, c] = size(obj.game.board);
+            I = round(x) + (round(y)-1) * c;
         end
     end
 end

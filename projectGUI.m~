@@ -96,37 +96,26 @@ eYLabel=cell(1,(by+1));
 for i=1:(by+1)
     eYLabel{i}=num2str(i-1);
 end
-<<<<<<< HEAD
-map = [ .8 .8 1; 0 0 0; 1 1 1 ; 0 0 0; 1 1 1; 1 .8 .8 ; .8 .8 1; 1 1 1];
-shownBrd(15) = 0.5;
-shownBrd(12) = 1;
-%[map, shownBrd] = map_colorsB(shownBrd);
-=======
 %map = [ .8 .8 1; 0 0 0; 1 1 1 ; 0 0 0; 1 1 1; 1 .8 .8 ; .8 .8 1; 1 1 1];
-shownBrd(15) = 1;
+%shownBrd(15) = 1;
 %shownBrd(12) = -1;
-[map, shownBrd] = map_colorsB(shownBrd);
->>>>>>> origin/master
+%[map, shownBrd] = map_colorsB(shownBrd);
 
-colormap(map)
+%colormap(map)
 imagesc(shownBrd,'parent',handles.axes1);
-colormap(handles.axes1,map)
 pbaspect([bx by 1]); %makes it look nice
 set(handles.axes1,'xtick',linspace(0.5,bx+0.5,bx+1),'ytick',linspace(0.5,by+0.5,by+1));
 set(handles.axes1,'XTickLabel',eXLabel,'YTickLabel',eYLabel);
 set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
-freezeColors(handles.axes1);
 
-mapn = [ 1 .8 .8; 1 1 .98 ; .8 .8 1; .1 .4 .4];
+
+%mapn = [ 1 .8 .8; 1 1 .98 ; .8 .8 1; .1 .4 .4];
 
 imagesc(nrn,'parent',handles.axes2);
-colormap(handles.axes2,mapn);
-freezeColors(handles.axes2);
 pbaspect([nx ny 1]); %makes it look nice
 set(handles.axes2,'xtick',linspace(0.5,nx+0.5,nx+1),'ytick',linspace(0.5,ny+0.5,ny+1));
 set(handles.axes2,'XTickLabel','','YTickLabel','');
 set(handles.axes2,'xgrid','on','ygrid','on','gridlinestyle','-');
-
 
 
 % Update handles structure
@@ -219,6 +208,18 @@ end
 % passed between functions in the GUI. The thought is that it can keep
 % track of what question the student is on so that the appropriate hint
 % displays
+while(1)
+   [x,y] = ginput2(1);
+   [r, c] = size(OB.board.getBoard);
+   I = round(x)-1 + round(y)-1;
+   
+   disp(r)
+   disp(c)
+   disp(round
+   disp(I) 
+end
+
+
 if hintNum == 1       
     hint=OB.getHint1;
     hintNum=hintNum+1;
@@ -230,13 +231,7 @@ else
 end      %% Not actually working yet. This is what will call the appropriate hints,
 % please send them as a string.
 % hint='This is a test';
-figure(2);%%pop-up window will appear with hint
-axesH=gca;
-if hintNum == 2
-    delete(axesH);
-    text(0.2,top,hint);
-else
-    text(0.2,top,hint);
-end
-set(gca,'XTickLabel','','YTickLabel','')
+figure(2);  %%pop-up window will appear with hint
+text(0.2,top,hint);
+axis off
 
