@@ -76,7 +76,7 @@ classdef Battleship < handle
                 out = 'Correct! Press Continue';
             else
                 last = obj.faq.getQuestion(); %logic
-                out = ['Sorry. Try again. \n',last];
+                out = ['Sorry. Try again.',last];
             end
         end
         
