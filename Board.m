@@ -24,7 +24,19 @@ classdef Board < handle
         
         		function brd = getBoard(obj)
         			brd=obj.board;
-        		end
+                end
+                
+                function shown = getShown(obj)
+                    shown=zeros(size(obj.board));
+                end
+                
+                function map = getMap(obj)
+                    map = [ .8 .8 1; 0 0 0; 1 1 1 ; 0 0 0; 1 1 1; 1 .8 .8 ; .8 .8 1; 1 1 1];
+                end
+                
+                function mapn = getMapn(obj)
+                    mapn = [ 1 .8 .8; 1 1 .98 ; .8 .8 1; .1 .4 .4];
+                end
         
         %places neuron on the board
         function placeNeuron(obj,nrn)

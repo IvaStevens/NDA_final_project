@@ -109,7 +109,7 @@ map=OB.board.getMap;
 %colormap(map)
 imagesc(shownBrd,'parent',handles.axes1);
 colormap(map)
-pbaspect(handles.axes1,[bx by 1]); %makes it look nice
+pbaspect([bx by 1]); %makes it look nice
 set(handles.axes1,'xtick',linspace(0.5,bx+0.5,bx+1),'ytick',linspace(0.5,by+0.5,by+1));
 set(handles.axes1,'XTickLabel',eXLabel,'YTickLabel',eYLabel);
 set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
@@ -121,7 +121,7 @@ mapn=OB.board.getMapn;
 imagesc(nrn,'parent',handles.axes2);
 colormap(mapn);
 freezeColors(handles.axes2);
-pbaspect(handles.axes2,[nx ny 1]); %makes it look nice
+pbaspect([nx ny 1]); %makes it look nice
 set(handles.axes2,'xtick',linspace(0.5,nx+0.5,nx+1),'ytick',linspace(0.5,ny+0.5,ny+1));
 set(handles.axes2,'XTickLabel','','YTickLabel','');
 set(handles.axes2,'xgrid','on','ygrid','on','gridlinestyle','-');
@@ -163,11 +163,10 @@ global OB;
 global eXLabel;
 global eYLabel;
 
-% updates board
 shownBrd=OB.board.getShown;
 bx=size(shownBrd,2); by=size(shownBrd,1);
 imagesc(shownBrd,'parent',handles.axes1);
-pbaspect(handles.axes1,[bx by 1]); %makes it look nice
+pbaspect([bx by 1]); %makes it look nice
 set(handles.axes1,'xtick',linspace(0.5,bx+0.5,bx+1),'ytick',linspace(0.5,by+0.5,by+1));
 set(handles.axes1,'XTickLabel',eXLabel,'YTickLabel',eYLabel);
 set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
@@ -209,18 +208,6 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 %     close(figure(2));
 % else
 global OB 
-global eXLabel;
-global eYLabel;
-
-% updates board
-shownBrd=OB.board.getShown;
-bx=size(shownBrd,2); by=size(shownBrd,1);
-imagesc(shownBrd,'parent',handles.axes1);
-pbaspect(handles.axes1,[bx by 1]); %makes it look nice
-set(handles.axes1,'xtick',linspace(0.5,bx+0.5,bx+1),'ytick',linspace(0.5,by+0.5,by+1));
-set(handles.axes1,'XTickLabel',eXLabel,'YTickLabel',eYLabel);
-set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
-
 str = OB.getnextquest();
 set(handles.text1,'string',str,'FontSize',11);
 
