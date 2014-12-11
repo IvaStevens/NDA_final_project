@@ -119,7 +119,7 @@ classdef Questions < handle
         function anr = probNrn(obj)
             anr = false; %LOGIC
         end
-                
+        
         function anr = clickable(obj)
             %corrAnr = obj.game.Somehting;  %LOGIC
             corrAnr = [1 2 3]; %Logic
@@ -160,20 +160,20 @@ classdef Questions < handle
     %functions for Easy Level
     methods
         function anr = anrYes(obj)
-           if isempty(strfind(lower(obj.resp), 'y'))
-               anr = false;
-           else
-               anr = true;
-           end    
-        end    
+            if isempty(strfind(lower(obj.resp), 'y'))
+                anr = false;
+            else
+                anr = true;
+            end
+        end
         
         function anr = anrNo(obj)
-           if isempty(strfind(lower(obj.resp), 'n'))
-               anr = false;
-           else
-               anr = true;
-           end
-        end       
+            if isempty(strfind(lower(obj.resp), 'n'))
+                anr = false;
+            else
+                anr = true;
+            end
+        end
         
         function anr = probArry(obj)
             [x, y] = size(obj.game.board.board);
@@ -182,8 +182,8 @@ classdef Questions < handle
             else
                 anr = false;
             end
-        end   
-               
+        end
+        
         function anr = sizeNrn(obj)
             %find the size of the neuron, and subtract the number of 0
             %cells
@@ -194,7 +194,7 @@ classdef Questions < handle
             else
                 anr = false;
             end
-        end   
+        end
         
         function anr = probAxnNrn(obj)
             ourNrn = obj.game.neuron.getNeuron;
@@ -204,7 +204,7 @@ classdef Questions < handle
             else
                 anr = false;
             end
-        end   
+        end
         
         % need to modify this function to calculate P(AH) + P(A) only and
         % new function for P(AH) + P(D)
@@ -226,12 +226,12 @@ classdef Questions < handle
         function anr = findAxnHil(obj)
             obj.game.click = true;
             obj.game.guesses = [];
-            corrAnr = obj.game.getAxnLoc; 
+            corrAnr = obj.game.getAxnLoc;
             len = length(corrAnr);
             old = obj.game.board.shown;
             while sum(ismember(corrAnr,obj.game.guesses)) < len
                 good = obj.game.guesses(ismember(obj.game.guesses,corrAnr));
-                obj.game.board.shown(good) = 1;  
+                obj.game.board.shown(good) = 1;
                 pause(.001)
             end
             good = obj.game.guesses(ismember(obj.game.guesses,corrAnr));
@@ -259,7 +259,7 @@ classdef Questions < handle
             obj.game.board.shown(34) = .5;
             obj.game.board.shown(40) = 1;
         end
-       
+        
         % Number questions
         function anr = four25ths(obj)
             corrAnr = 4/25;
@@ -332,34 +332,53 @@ classdef Questions < handle
             while length(obj.game.guesses) == len
                 pause(1);
             end
+            % if part of the nrn was found let them click around until the
+            ind = find(obj.game.board.board); %indices of nrn
+            if sum(ismember(ind,obj.game.guesses)) > 0
+                while sum(ismember(ind,obj.game.guesses)) < length(ind)
+                    I = obj.game.guesses(end);
+                    if obj.game.board.board(I)
+                        obj.game.board.shown(I) = .5;
+                    else
+                        obj.game.board.shown(I) = .25;
+                    end
+                    pause(.001)
+                end
+            end
+            % rest of the nrn is found then game over.
             % turn off click
             obj.game.click = false;
             anr = true;
         end
         
         function anr = hard2(obj)
-            % ask to calculate probability nrn is there            
+            % ask to calculate probability nrn is there
             I = obj.game.guesses(end);
             res = obj.resp;
-            probMat = obj.game.calcProbMat;
-            corrAnr = probMat(I);         
-            if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
+            ind = find(obj.game.board.board); %indices of nrn
+            if ismember(I,ind)
+                corrAnr = 1/obj.game.getAxnLoc;
+            else
+                corrAnr = 0;
+            end
+            %check answer
+            if  abs(res - corrAnr) <  8.0000e-04 
                 anr = true;
             else
-                anr = false;
+                anr = true;%LOGIC
             end
         end
         
-        function anr = hard3(obj)                        
+        function anr = hard3(obj)
             I = obj.game.guesses(end);
             % told if nrn is there
-            % change color for point of current guess 
+            % change color for point of current guess
             if obj.game.board.board(I)
                 obj.game.board.shown(I) = .5;
-            else                
-                obj.game.board.shown(I) = .25;
-            end           
-            % set variable if entire nrn found to end game 
+                %else
+                %   obj.game.board.shown(I) = .25;
+            end
+            % set variable if entire nrn found to end game
             nrn = find(obj.game.board.board); %Logic
             nlen = length(nrn);
             if sum(ismember(nrn,obj.game.guesses)) == nlen
@@ -371,13 +390,14 @@ classdef Questions < handle
     end
     
     %Various helper functions
-    methods 
+    methods
         % I want this function to parse the string response from the user
         % and evaluate it in matlab it if contains a division symbol. '\'
         % and otherwise just return the decimal value
         function numResult = frac2num(str)
             numResult = str2num(str);
         end
+        
         
         function I = convertGuess(obj, x, y)
             %function takes the x,y location and returns the index number for

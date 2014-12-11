@@ -299,7 +299,7 @@ end
 
 % updates board
 if OB.level == Level.Hard
-    OB.board.shown(I) = .5;
+    OB.board.shown(I) = -1;
 end
 
 shownBrd=OB.board.getShown;

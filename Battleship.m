@@ -15,8 +15,7 @@ classdef Battleship < handle
     methods
         %startup code
         function  obj = Battleship()
-            %lvl = Level.Easy; % Logic?
-            obj.score = 102;
+            obj.score = 20;
             %obj.setLevel(lvl)
         end
         
@@ -57,10 +56,12 @@ classdef Battleship < handle
         
         function str =  getHint1(obj)
             str = obj.faq.getHint1();
+            obj.score = obj.score -1;
         end
         
         function str =  getHint2(obj)
             str = obj.faq.getHint2();
+            obj.score = obj.score -1;
         end
         
         function str = getnextquest(obj)
@@ -71,17 +72,22 @@ classdef Battleship < handle
         function out = checkans(obj, str)
             obj.faq.setUserResponse(str); % write this. set new variable in Question function
             check = obj.faq.answerQuestion;
+            scr = obj.score;
             if check
                 out = 'Correct! Press Continue';
+                obj.score = scr + 5;
                 if strcmp(strtrim(getAnswer(obj.faq)), '@hard1')
                     out = 'Press Continue';
+                    obj.score = scr;
                 end
                 if strcmp(strtrim(getAnswer(obj.faq)), '@KeyPressed')
                     out = 'Press Continue';
+                    obj.score = scr;
                 end
             else
                 last = obj.faq.getQuestion(); %logic
-                out = ['Sorry. Try again. ',last];
+                out = ['Sorry. Try again. ',last];                
+                obj.score = scr - 2;
             end
         end
         
@@ -89,10 +95,6 @@ classdef Battleship < handle
             % assert guess within range
             % assert guess not repeated
             obj.guesses = [obj.guesses, guess];
-        end
-       
-        function M = calcProbMat(obj)
-            A = getAxnLoc(obj);
         end
         
         function A = getAxnLoc(obj)
@@ -103,9 +105,7 @@ classdef Battleship < handle
             nrn = abs(obj.neuron.getNeuron); % neuron matrix
             [nLen, nWid] = size(nrn);
             [bLen, bWid] = size(obj.board.board);
-            n = sum(nrn > 0);
             nrnMask = rot90(rot90(nrn == 0))+0; %1 => where it can be; +0 turns logical to int
-            f = find(nrn);
             temp = ones(bLen, bWid); % 1 => where the point could be
             pt = find(rot90(rot90(nrn)) == 2);
             top = ceil(pt/nWid);
@@ -135,22 +135,45 @@ classdef Battleship < handle
             
             % remove space around guesses
             nGes = length(obj.guesses);
+            ind = find(obj.board.board);
+            wng = obj.guesses;
+            wng(ismember(wng,ind)) = [];
+            sft = 5;
+            bigTemp = zeros(sft+bwid,sft+blen);
+            bigTemp(sft:sft+bwid-1,sft:sft+blen-1) = temp;
             if nGes > 0
                 for j = 1: nGes
-                    if temp(obj.guesses(j)) ~= 0
-                        gX = mod(j,bWid);
-                        gY = ceil(j/bWid);
-                        k = nrn == 2;
-                        nX = mod(k,nWid);
-                        nY = ceil(k/nWid);
-                        tp = gX + nX -1; %logic?
-                        lf = gY + nY -1; %logic?
-                        temp(tp:tp+nLen-1,lf:lf+nWid-1)...
-                            = temp(tp:tp+nLen-1,lf:lf+nWid-1)+ nrnMask;
-                    end
+                    s = wng(j);
+                    gX = mod(s,bWid);
+                    gY = ceil(s/bWid);
+                    bX = gX + sft;
+                    bY = gY + sft;
+                    k = nrn == 2;
+                    nX = mod(k,nWid);
+                    nY = ceil(k/nWid);
+                    tp = bX + nX -1; 
+                    lf = bY + nY -1; 
+                    bigTemp(tp:tp+nLen-1,lf:lf+nWid-1)...
+                        = bigTemp(tp:tp+nLen-1,lf:lf+nWid-1)+ nrnMask;
                 end
+                temp = bigTemp(sft:sft+bwid-1,sft:sft+blen-1);
             end
-        A = find(temp);  
+            % %             if nGes > 0
+            % %                 for j = 1: nGes
+            % %                     if temp(obj.guesses(j)) ~= 0
+            % %                         gX = mod(j,bWid);
+            % %                         gY = ceil(j/bWid);
+            % %                         k = nrn == 2;
+            % %                         nX = mod(k,nWid);
+            % %                         nY = ceil(k/nWid);
+            % %                         tp = gX + nX -1; %logic?
+            % %                         lf = gY + nY -1; %logic?
+            % %                         temp(tp:tp+nLen-1,lf:lf+nWid-1)...
+            % %                             = temp(tp:tp+nLen-1,lf:lf+nWid-1)+ nrnMask;
+            % %                     end
+            % %                 end
+            % %             end
+            A = find(temp);
         end
     end
     

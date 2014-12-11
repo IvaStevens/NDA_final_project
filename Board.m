@@ -33,7 +33,8 @@ classdef Board < handle
                 end
                 
                 function map = getMap(obj)
-                    map = [ .8 .8 1; 0 0 0; 1 1 1 ; 0 0 0; 1 1 1; 1 .8 .8 ; .8 .8 1; 1 1 1];
+                    %map = [ .8 .8 1; 0 0 0; 1 1 1 ; 0 0 0; 1 1 1; 1 .8 .8 ; .8 .8 1; 1 1 1];
+                    map = [ .8 .8 1; .8 1 .8; 1 1 .8 ; 1 .8 0; 1 0 1; 1 .8 .8 ; .8 .8 1; .8 1 1];
                 end
                 
                 function mapn = getMapn(obj)
