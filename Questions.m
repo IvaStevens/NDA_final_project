@@ -156,12 +156,17 @@ classdef Questions < handle
         end
         
         % sets the new level at end of easy and medium levels
-        function setNextLevel(obj)
-            if obj.game.level == Level.Easy
-                setLevel(obj,'Medium');
+        function anr = setNextLevel(obj)
+            if isempty(strfind(lower(obj.resp), 'ready'))
+               anr = false;
             else
-                setLevel(obj,'Hard');
-            end     
+               anr = true;
+               if obj.game.level == Level.Easy
+                   obj.game.setLevel('Medium');
+               else
+                   obj.game.setLevel('Hard');
+               end
+            end
         end
         
     end
