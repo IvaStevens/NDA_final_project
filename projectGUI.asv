@@ -231,5 +231,5 @@ if hintNum == 2
 else
     text(0.2,top,hint);
 end
-set(gca,'XTickLabel','','YTickLabel','')
+set(axesH,'XTickLabel','','
 
