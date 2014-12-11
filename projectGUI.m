@@ -235,7 +235,7 @@ set(handles.text1,'string',str);
 if contNum == 102    %number of times they should hit continue to go through all the questions in the excel file
     figure(3);
     GOax=gca;
-    GOfig=imread('cute_neuron.jpg');
+    GOfig=imread('cute_neuron2.jpg');
     gx=size(GOfig,2); gy=size(GOfig,1);
     image(GOfig);
     axis(GOax,'off')
