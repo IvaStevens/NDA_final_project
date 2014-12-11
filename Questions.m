@@ -173,22 +173,17 @@ classdef Questions < handle
            else
                anr = true;
            end
-        end   
-        
+        end       
         
         function anr = probArry(obj)
             [x, y] = size(obj.game.board.board);
-            disp(obj.resp)
-            disp(1/(x*y))
             if str2num(obj.resp) == 1/(x * y)
-                disp(1/(x*y))
                 anr = true;
             else
                 anr = false;
             end
         end   
-        
-        
+               
         function anr = sizeNrn(obj)
             %find the size of the neuron, and subtract the number of 0
             %cells
@@ -201,20 +196,23 @@ classdef Questions < handle
             end
         end   
         
-        
         function anr = probAxnNrn(obj)
-            [x, y] = size(obj.game.neuron.getNeuron);
-            if str2num(obj.resp) == 1/(x * y - sum(obj.game.neuron.getNeuron(:)==0))
+            ourNrn = obj.game.neuron.getNeuron;
+            [x, y] = size(ourNrn);
+            if str2num(obj.resp) == 1/(x * y - sum(ourNrn(:)==0))
                 anr = true;
             else
                 anr = false;
             end
         end   
         
+        % need to modify this function to calculate P(AH) + P(A) only and
+        % new function for P(AH) + P(D)
         % assuming # of axon squares == dendrite squares, VERIFY
         function anr = prob(obj)
-            [x, y] = size(obj.game.neuron.getNeuron);
-            t = x * y - sum(obj.game.neuron.getNeuron(:)==0);
+            ourNrn = obj.game.neuron.getNeuron;
+            [x, y] = size(ourNrn);
+            t = x * y - sum(ourNrn(:)==0);
             if str2num(obj.resp) == (1+(t-1)/2)/t
                 anr = true;
             else
