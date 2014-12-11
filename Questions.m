@@ -327,9 +327,15 @@ classdef Questions < handle
         %    edit shownBoard
         function anr = hardGame1(obj)
             % ask to click location
-            [x,y] = ginput2(1);
-            I = obj.convertGuess(x,y);
+            obj.game.click = true;
+            len = length(obj.game.guesses);
+            while length(obj.game.guesses) == len
+                pause(1);
+            end
+            obj.resp = obj.game.guesses(end);
             % change color for point of current guess
+            obj.game.board.shown(good) = 1;
+            anr = true;
         end
         function anr = hardGame2(obj)
             % ask to calculate probability nrn is there
