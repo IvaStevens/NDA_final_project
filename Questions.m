@@ -204,21 +204,23 @@ classdef Questions < handle
     %functions for Medium Level
     methods
         function anr = findAxnHil(obj)
+            obj.game.click = true;
             obj.game.guesses = [];
-            corrAnr = obj.game.getAxnLoc; %Logic, write this
-            temp = [];
-            %old = obj.game.board.board;
-            while length(temp) ~= length(corrAnr)
-                [x,y] = ginput2(1);
-                I = obj.convertGuess(x,y);
-                if ismember(I,corrAnr) && ~ismember(I, temp)
-                    temp = [temp,I];
-                    %change color of board
-                    obj.game.board.board(I) = 1;
-                end
+            corrAnr = obj.game.getAxnLoc; 
+            len = length(corrAnr);
+            old = obj.game.board.shown;
+            while sum(ismember(corrAnr,obj.game.guesses)) < len
+                good = obj.game.guesses(ismember(obj.game.guesses,corrAnr));
+                obj.game.board.shown(good) = 1;  
+                pause(.001)
             end
+            good = obj.game.guesses(ismember(obj.game.guesses,corrAnr));
+            obj.game.board.shown(good) = 1;
+            pause(.01);
             %reset old board
-            %obj.game.board.board = old;
+            %obj.game.board.shown = old;
+            obj.game.guesses = [];
+            %obj.game.click = false;
             anr = true;
         end
         function anr = probAxnHil(obj)
@@ -276,8 +278,9 @@ classdef Questions < handle
         function I = convertGuess(obj, x, y)
             %function takes the x,y location and returns the index number for
             %the board square that it corresponds to.
-            [~, c] = size(obj.game.board);
-            I = round(x) + (round(y)-1) * c;
+            [r, ~] = size(obj.game.board.board);
+            %I = round(x) + (round(y)-1) * c;
+            I = (ceil(x-.5)-1)*r + ceil(y-.5);
         end
     end
 end

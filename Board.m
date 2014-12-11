@@ -1,5 +1,6 @@
 classdef Board < handle
     properties
+        shown
         sze
         board
         axn % location of axon hillock on board
@@ -20,14 +21,15 @@ classdef Board < handle
                     brd = zeros(7,7);
             end
             obj.board = brd;
+            obj.shown=zeros(size(obj.board));
         end
         
         		function brd = getBoard(obj)
         			brd=obj.board;
                 end
                 
-                function shown = getShown(obj)
-                    shown=zeros(size(obj.board));
+                function shwn = getShown(obj)
+                    shwn = obj.shown;
                 end
                 
                 function map = getMap(obj)

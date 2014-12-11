@@ -127,7 +127,8 @@ set(handles.axes2,'xtick',linspace(0.5,nx+0.5,nx+1),'ytick',linspace(0.5,ny+0.5,
 set(handles.axes2,'XTickLabel','','YTickLabel','');
 set(handles.axes2,'xgrid','on','ygrid','on','gridlinestyle','-');
 
-
+%for clickable functions
+set(hObject,'WindowButtonDownFcn',{@clickableCall,handles})
 
 % Update handles structure
 guidata(hObject, handles);
@@ -278,4 +279,32 @@ else
     text(0.2,top,hint);
 end
 set(gca,'XTickLabel','','YTickLabel','')
+
+
+function clickableCall(hObject,eventdata, handles)
+global OB
+global eXLabel
+global eYLabel
+
+%disp('here');
+if OB.click == true
+%pos = get(hObject,'CurrentPoint')
+%x = pos(1);
+%y = pos(2);
+[x,y] = ginput2(1);
+I = OB.faq.convertGuess(x,y);
+if ~ismember(I, OB.guesses)
+OB.guesses = [OB.guesses,I];
+end
+
+% updates board
+shownBrd=OB.board.getShown;
+bx=size(shownBrd,2); by=size(shownBrd,1);
+imagesc(shownBrd,'parent',handles.axes1);
+pbaspect(handles.axes1,[bx by 1]); %makes it look nice
+set(handles.axes1,'xtick',linspace(0.5,bx+0.5,bx+1),'ytick',linspace(0.5,by+0.5,by+1));
+set(handles.axes1,'XTickLabel',eXLabel,'YTickLabel',eYLabel);
+set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
+
+end
 
