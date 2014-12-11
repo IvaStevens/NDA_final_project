@@ -139,8 +139,8 @@ classdef Battleship < handle
             wng = obj.guesses;
             wng(ismember(wng,ind)) = [];
             sft = 5;
-            bigTemp = zeros(sft+bwid,sft+blen);
-            bigTemp(sft:sft+bwid-1,sft:sft+blen-1) = temp;
+            bigTemp = zeros(sft+bWid,sft+bLen);
+            bigTemp(sft:sft+bLen-1,sft:sft+bWid-1) = temp;
             if nGes > 0
                 for j = 1: nGes
                     s = wng(j);
@@ -156,7 +156,7 @@ classdef Battleship < handle
                     bigTemp(tp:tp+nLen-1,lf:lf+nWid-1)...
                         = bigTemp(tp:tp+nLen-1,lf:lf+nWid-1)+ nrnMask;
                 end
-                temp = bigTemp(sft:sft+bwid-1,sft:sft+blen-1);
+                temp = bigTemp(sft:sft+bWid-1,sft:sft+bLen-1);
             end
             % %             if nGes > 0
             % %                 for j = 1: nGes
