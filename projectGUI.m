@@ -96,17 +96,11 @@ eYLabel=cell(1,(by+1));
 for i=1:(by+1)
     eYLabel{i}=num2str(i-1);
 end
-<<<<<<< HEAD
+
 map = [ .8 .8 1; 0 0 0; 1 1 1 ; 0 0 0; 1 1 1; 1 .8 .8 ; .8 .8 1; 1 1 1];
 shownBrd(15) = 0.5;
 shownBrd(12) = 1;
 %[map, shownBrd] = map_colorsB(shownBrd);
-=======
-%map = [ .8 .8 1; 0 0 0; 1 1 1 ; 0 0 0; 1 1 1; 1 .8 .8 ; .8 .8 1; 1 1 1];
-shownBrd(15) = 1;
-%shownBrd(12) = -1;
-[map, shownBrd] = map_colorsB(shownBrd);
->>>>>>> origin/master
 
 colormap(map)
 imagesc(shownBrd,'parent',handles.axes1);
@@ -188,7 +182,7 @@ end
 
 
 
-% --- Executes on button press in pushbutton2.
+% --- Executes on button press in pushbutton2. Continue button
 function pushbutton2_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -205,7 +199,7 @@ set(handles.text1,'string',str,'FontSize',11);
 % end
 
 
-% --- Executes on button press in pushbutton3.
+% --- Executes on button press in pushbutton3. Hint button
 function pushbutton3_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton3 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
