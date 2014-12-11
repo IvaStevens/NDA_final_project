@@ -225,6 +225,16 @@ classdef Questions < handle
                 anr = false;
             end
         end
+        
+        function anr = probAxonDendrite(obj)
+            ourNrn = obj.game.neuron.getNeuron;
+            [x, y] = size(ourNrn);
+            if str2num(obj.resp) == (sum(ourNrn(:)==1) + sum(ourNrn(:)==-1))/(x * y - sum(ourNrn(:)==0))
+                anr = true;
+            else
+                anr = false;
+            end
+        end
     end
     
     %functions for Medium Level
