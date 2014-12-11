@@ -236,7 +236,7 @@ set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
 str = OB.getnextquest();
 set(handles.text1,'string',str,'FontSize',11);
 
-if contNum == 106    %number of times they should hit continue to go through all the questions in the excel file
+if contNum == 102    %number of times they should hit continue to go through all the questions in the excel file
     figure(3);
     GOax=gca;
     GOfig=imread('cute_neuron.jpg');
