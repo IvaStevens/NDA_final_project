@@ -209,7 +209,7 @@ classdef Questions < handle
         function anr = probAxonAH(obj)
             ourNrn = obj.game.neuron.getNeuron;
             [x, y] = size(ourNrn);
-            if str2num(obj.resp) == (sum(ourNrn(:)==2) + sum(ourNrn(:)==1))/(x * y - sum(ourNrn(:)==0))
+            if str2num(obj.resp) == (sum(ourNrn(:)==2) + sum(ourNrn(:)==-1))/(x * y - sum(ourNrn(:)==0))
                 anr = true;
             else
                 anr = false;
@@ -219,7 +219,7 @@ classdef Questions < handle
         function anr = probDendriteAH(obj)
             ourNrn = obj.game.neuron.getNeuron;
             [x, y] = size(ourNrn);
-            if str2num(obj.resp) == (sum(ourNrn(:)==2) + sum(ourNrn(:)==-1))/(x * y - sum(ourNrn(:)==0))
+            if str2num(obj.resp) == (sum(ourNrn(:)==2) + sum(ourNrn(:)==1))/(x * y - sum(ourNrn(:)==0))
                 anr = true;
             else
                 anr = false;
@@ -229,7 +229,7 @@ classdef Questions < handle
         function anr = probAxonDendrite(obj)
             ourNrn = obj.game.neuron.getNeuron;
             [x, y] = size(ourNrn);
-            if str2num(obj.resp) == (sum(ourNrn(:)==1) + sum(ourNrn(:)==-1))/(x * y - sum(ourNrn(:)==0))
+            if str2num(obj.resp) == (sum(ourNrn(:)==-1) + sum(ourNrn(:)==1))/(x * y - sum(ourNrn(:)==0))
                 anr = true;
             else
                 anr = false;
