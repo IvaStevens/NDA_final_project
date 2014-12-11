@@ -224,14 +224,20 @@ classdef Questions < handle
             anr = true;
         end
         function anr = probAxnHil(obj)
+            obj.game.click = false;
+            obj.game.guesses = [];
             [a,b] = size(obj.game.board.board);
             nElec =  a*b;%number of electrodes
-            corrAnr = sum(obj.game.getAxnLoc) / nElec;
-            if obj.game.resp == corrAnr %LOGIC
+            corrAnr = length(obj.game.getAxnLoc) / nElec;
+            res = str2num(obj.resp);
+            if  abs(res - corrAnr) <  -8.0000e-04 %LOGIC
                 anr = true;
             else
                 anr = false;
             end
+            obj.game.board.shown = zeros(size(obj.game.board.board));
+            obj.game.board.shown(14) = .5;
+            obj.game.board.shown(18) = 1;
         end
         function anr = probBehind(obj)
             corrAnr = 1/sum(obj.game.getAxnLoc);

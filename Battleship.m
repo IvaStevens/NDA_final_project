@@ -16,7 +16,7 @@ classdef Battleship < handle
         %startup code
         function  obj = Battleship()
             %lvl = Level.Easy; % Logic?
-            obj.score = 0;
+            obj.score = 102;
             %obj.setLevel(lvl)
         end
         
