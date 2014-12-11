@@ -185,6 +185,11 @@ ansNum=str2num(str2);
 newText=OB.checkans(str2);
 %newText=sprintf(ansStr);
 
+% Notebook stuff
+notebookText=OB.notebook.getText;
+Ntxt=sprintf(['Notebook\n\n',notebookText]);
+set(handles.text2,'string',Ntxt);
+
 set(handles.text1,'String',newText);
 
 % --- Executes during object creation, after setting all properties.
