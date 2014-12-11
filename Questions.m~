@@ -200,18 +200,17 @@ classdef Questions < handle
         
         function anr = probAxnNrn(obj)
             [x, y] = size(obj.game.neuron.getNeuron);
-            if obj.game.getAxnLoc == 1/(x * y - sum(obj.game.neuron.getNeuron(:)==0))
+            if obj.game.getAxnLoc == 1/(x * y)
                 anr = true;
             else
                 anr = false;
             end
         end   
         
-        % assuming # of axon squares == dendrite squares, VERIFY
+        % assuming # of axon squares == dendrite squares, verify that
         function anr = prob(obj)
             [x, y] = size(obj.game.neuron.getNeuron);
-            t = x * y - sum(obj.game.neuron.getNeuron(:)==0);
-            if obj.game.getAxnLoc == (1+(t-1)/2)/t
+            if obj.game.getAxnLoc == (1+/(x * y)
                 anr = true;
             else
                 anr = false;
