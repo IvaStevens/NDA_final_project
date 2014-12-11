@@ -40,6 +40,7 @@ classdef Battleship < handle
             obj.board.placeNeuron(nrn);
             obj.faq = Questions(obj);
             obj.contNum=cNum;
+            obj.notebook=Notebook(lvl);
         end
         %This function should pull the next question/answer set
         %from the questions class. It will repetively call for these

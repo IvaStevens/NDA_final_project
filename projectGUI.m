@@ -78,9 +78,10 @@ set(handles.pushbutton3,'string','Get Hint');
 handles.output = hObject;
 
 % Notebook stuff
-%notebookText=OB.Notebook.getText(OB.level);
+notebookText=OB.notebook.getText;
 % notebookText='This is a test';
-%set(handles.text2,'string',sprintf(['Notebook\n\n',notebookText]),'FontSize',11);
+Ntxt=sprintf(['Notebook\n\n',notebookText]);
+set(handles.text2,'string',Ntxt);
 
 % Plot grid and neuron
 % I know it's not pretty but it's working.
