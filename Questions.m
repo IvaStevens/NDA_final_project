@@ -290,8 +290,8 @@ classdef Questions < handle
                 anr = false;
             end
         end
-        function anr = six18ths(obj)
-            corrAnr = 6/18
+        function anr = six25ths(obj)
+            corrAnr = 6/25
             res = str2num(obj.resp)
             if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
                 anr = true;
