@@ -98,8 +98,8 @@ for i=1:(by+1)
 end
 
 map = [ .8 .8 1; 0 0 0; 1 1 1 ; 0 0 0; 1 1 1; 1 .8 .8 ; .8 .8 1; 1 1 1];
-shownBrd(15) = 0.5;
-shownBrd(12) = 1;
+%shownBrd(15) = 0.5;
+%shownBrd(12) = 1;
 %[map, shownBrd] = map_colorsB(shownBrd);
 
 colormap(map)

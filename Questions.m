@@ -176,7 +176,7 @@ classdef Questions < handle
         end   
         
         
-        function anr = probArry
+        function anr = probArry(obj)
         
         end   
         

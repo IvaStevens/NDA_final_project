@@ -154,7 +154,7 @@ classdef Battleship < handle
             nrn = abs(obj.neuron.getNeuron); % neuron matrix
             [nLen, nWid] = size(nrn);
             n = sum(nrn > 0);
-            nrnMask = int(rot90(rot90(nrn == 0))); %1 => where it can be
+            nrnMask = rot90(rot90(nrn == 0))+0; %1 => where it can be; +0 turns logical to int
             f = find(nrn);
             m = zeros(bLen, bWid, n);
             for i = 1:n
