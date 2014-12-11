@@ -199,21 +199,27 @@ classdef Questions < handle
         function anr = probAxnNrn(obj)
             ourNrn = obj.game.neuron.getNeuron;
             [x, y] = size(ourNrn);
-            if str2num(obj.resp) == 1/(x * y - sum(ourNrn(:)==0))
+            if str2num(obj.resp) == (sum(ourNrn(:)==2))/(x * y - sum(ourNrn(:)==0))
                 anr = true;
             else
                 anr = false;
             end
         end   
         
-        % need to modify this function to calculate P(AH) + P(A) only and
-        % new function for P(AH) + P(D)
-        % assuming # of axon squares == dendrite squares, VERIFY
-        function anr = prob(obj)
+        function anr = probAxonAH(obj)
             ourNrn = obj.game.neuron.getNeuron;
             [x, y] = size(ourNrn);
-            t = x * y - sum(ourNrn(:)==0);
-            if str2num(obj.resp) == (1+(t-1)/2)/t
+            if str2num(obj.resp) == (sum(ourNrn(:)==2) + sum(ourNrn(:)==1))/(x * y - sum(ourNrn(:)==0))
+                anr = true;
+            else
+                anr = false;
+            end
+        end
+        
+        function anr = probDendriteAH(obj)
+            ourNrn = obj.game.neuron.getNeuron;
+            [x, y] = size(ourNrn);
+            if str2num(obj.resp) == (sum(ourNrn(:)==2) + sum(ourNrn(:)==-1))/(x * y - sum(ourNrn(:)==0))
                 anr = true;
             else
                 anr = false;
