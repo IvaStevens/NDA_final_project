@@ -29,19 +29,19 @@ classdef Questions < handle
             if obj.game.level == Level.Easy
                 % may need to add 'basic' after column range if using a
                 % Unix system
-                [~,obj.qList,~] = xlsread(filename, 'easy', 'A3:A39', 'basic'); % filename, level sheet, column
-                [~,obj.aList,~] = xlsread(filename, 'easy', 'B3:B39', 'basic');
-                [~,obj.h1List,~] = xlsread(filename, 'easy', 'C3:C39', 'basic');
-                [~,obj.h2List,~] = xlsread(filename, 'easy', 'D3:D39', 'basic');
+                [~,obj.qList,~] = xlsread(filename, 'easy', 'A3:A40', 'basic'); % filename, level sheet, column
+                [~,obj.aList,~] = xlsread(filename, 'easy', 'B3:B40', 'basic');
+                [~,obj.h1List,~] = xlsread(filename, 'easy', 'C3:C40', 'basic');
+                [~,obj.h2List,~] = xlsread(filename, 'easy', 'D3:D40', 'basic');
             end
             
             if obj.game.level == Level.Medium
                 % may need to add 'basic' after column range if using a
                 % Unix system
-                [~,obj.qList,~] = xlsread(filename, 'medium', 'A3:A32'); % filename, level sheet, column
-                [~,obj.aList,~] = xlsread(filename, 'medium', 'B3:B32');
-                [~,obj.h1List,~] = xlsread(filename, 'medium', 'C3:C32');
-                [~,obj.h2List,~] = xlsread(filename, 'medium', 'D3:D32');
+                [~,obj.qList,~] = xlsread(filename, 'medium', 'A3:A33'); % filename, level sheet, column
+                [~,obj.aList,~] = xlsread(filename, 'medium', 'B3:B33');
+                [~,obj.h1List,~] = xlsread(filename, 'medium', 'C3:C33');
+                [~,obj.h2List,~] = xlsread(filename, 'medium', 'D3:D33');
             end
             
             if obj.game.level == Level.Hard
@@ -155,6 +155,15 @@ classdef Questions < handle
             anr = [];
         end
         
+        % sets the new level at end of easy and medium levels
+        function setNextLevel(obj)
+            if obj.game.level == Level.Easy
+                setLevel(obj,'Medium')
+            else
+                setLevel(obj,'Hard')
+            end     
+        end
+        
     end
     
     %functions for Easy Level
@@ -235,6 +244,9 @@ classdef Questions < handle
                 anr = false;
             end
         end
+        
+        
+        
     end
     
     %functions for Medium Level
