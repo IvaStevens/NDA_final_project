@@ -61,8 +61,9 @@ function projectGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 global OB;
 global eXLabel;
 global eYLabel;
+global contNum
 % Use case to determine what question to put in the static text box.
-
+contNum=OB.contNum;
 welcome = OB.getnextquest();
 set(handles.text1,'string',welcome,'FontSize',12);
 
@@ -211,6 +212,10 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 global OB 
 global eXLabel;
 global eYLabel;
+global contNum;
+%contNum=105; did this to test game over figure
+
+contNum=contNum+1;
 
 % updates board
 shownBrd=OB.board.getShown;
@@ -224,6 +229,18 @@ set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
 str = OB.getnextquest();
 set(handles.text1,'string',str,'FontSize',11);
 
+if contNum == 106 %number of times they should hit continue to go through all the questions in the excel file
+    figure(3);
+    GOax=gca;
+    GOfig=imread('cute_neuron.jpg');
+    gx=size(GOfig,2); gy=size(GOfig,1);
+    image(GOfig);
+    axis(GOax,'off')
+    pbaspect(GOax,[gx gy 1]);
+    title('Game Over!','Fontsize',16);
+else
+end
+    
 % end
 
 
