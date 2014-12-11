@@ -7,6 +7,7 @@ classdef Battleship < handle
         level
         neuron
         faq
+        contNum
         guesses % For simplicity sake: Keeping guesses as an index
     end
     
@@ -21,12 +22,15 @@ classdef Battleship < handle
         function setLevel(obj,lName)
             if strcmp(lName,'Easy')
                 lvl = Level.Easy;
+                contNum = 0;
             end
             if strcmp(lName,'Medium')
                 lvl = Level.Medium;
+                contNum=42;
             end
             if strcmp(lName,'Hard')
                 lvl = Level.Hard;
+                contNum=69;
             end
             obj.level = lvl;
             obj.board = Board(lvl);
@@ -34,6 +38,7 @@ classdef Battleship < handle
             nrn = obj.neuron.getNeuron;
             obj.board.placeNeuron(nrn);
             obj.faq = Questions(obj);
+            obj.contNum=contNum;
         end
         %This function should pull the next question/answer set
         %from the questions class. It will repetively call for these
