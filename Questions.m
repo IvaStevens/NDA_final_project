@@ -178,6 +178,8 @@ classdef Questions < handle
         
         function anr = probArry(obj)
             [x, y] = size(obj.game.board.board);
+            disp(obj.game.getAxnLoc)
+            disp(1/(x*y))
             if obj.game.getAxnLoc == 1/(x * y)
                 anr = true;
             else

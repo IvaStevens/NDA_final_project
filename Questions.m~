@@ -178,6 +178,8 @@ classdef Questions < handle
         
         function anr = probArry(obj)
             [x, y] = size(obj.game.board.board);
+            disp(obj.game.getAxnLoc)
+            disp(1/(x*y))
             if obj.game.getAxnLoc == 1/(x * y)
                 anr = true;
             else
@@ -200,17 +202,18 @@ classdef Questions < handle
         
         function anr = probAxnNrn(obj)
             [x, y] = size(obj.game.neuron.getNeuron);
-            if obj.game.getAxnLoc == 1/(x * y)
+            if obj.game.getAxnLoc == 1/(x * y - sum(obj.game.neuron.getNeuron(:)==0))
                 anr = true;
             else
                 anr = false;
             end
         end   
         
-        % assuming # of axon squares == dendrite squares, verify that
+        % assuming # of axon squares == dendrite squares, VERIFY
         function anr = prob(obj)
             [x, y] = size(obj.game.neuron.getNeuron);
-            if obj.game.getAxnLoc == (1+/(x * y)
+            t = x * y - sum(obj.game.neuron.getNeuron(:)==0);
+            if obj.game.getAxnLoc == (1+(t-1)/2)/t
                 anr = true;
             else
                 anr = false;
