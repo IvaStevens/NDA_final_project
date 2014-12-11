@@ -78,9 +78,10 @@ set(handles.pushbutton3,'string','Get Hint');
 handles.output = hObject;
 
 % Notebook stuff
-%notebookText=OB.Notebook.getText(OB.level);
+notebookText=OB.notebook.getText;
 % notebookText='This is a test';
-%set(handles.text2,'string',sprintf(['Notebook\n\n',notebookText]),'FontSize',11);
+Ntxt=sprintf(['Notebook\n\n',notebookText]);
+set(handles.text2,'string',Ntxt);
 
 % Plot grid and neuron
 % I know it's not pretty but it's working.
@@ -184,6 +185,11 @@ ansNum=str2num(str2);
 newText=OB.checkans(str2);
 %newText=sprintf(ansStr);
 
+% Notebook stuff
+notebookText=OB.notebook.getText;
+Ntxt=sprintf(['Notebook\n\n',notebookText]);
+set(handles.text2,'string',Ntxt);
+
 set(handles.text1,'String',newText);
 
 % --- Executes during object creation, after setting all properties.
@@ -230,7 +236,7 @@ set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
 str = OB.getnextquest();
 set(handles.text1,'string',str,'FontSize',11);
 
-if contNum == 106 %number of times they should hit continue to go through all the questions in the excel file
+if contNum == 102    %number of times they should hit continue to go through all the questions in the excel file
     figure(3);
     GOax=gca;
     GOfig=imread('cute_neuron.jpg');
@@ -238,7 +244,8 @@ if contNum == 106 %number of times they should hit continue to go through all th
     image(GOfig);
     axis(GOax,'off')
     pbaspect(GOax,[gx gy 1]);
-    title('Game Over!','Fontsize',16);
+    score=OB.score;
+    title(sprintf('Game Over! Your score is %d',score),'Fontsize',16);
 else
 end
     

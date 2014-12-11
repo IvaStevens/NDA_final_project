@@ -38,10 +38,10 @@ classdef Questions < handle
             if obj.game.level == Level.Medium
                 % may need to add 'basic' after column range if using a
                 % Unix system
-                [~,obj.qList,~] = xlsread(filename, 'medium', 'A3:A40'); % filename, level sheet, column
-                [~,obj.aList,~] = xlsread(filename, 'medium', 'B3:B40');
-                [~,obj.h1List,~] = xlsread(filename, 'medium', 'C3:C40');
-                [~,obj.h2List,~] = xlsread(filename, 'medium', 'D3:D40');
+                [~,obj.qList,~] = xlsread(filename, 'medium', 'A3:A33'); % filename, level sheet, column
+                [~,obj.aList,~] = xlsread(filename, 'medium', 'B3:B33');
+                [~,obj.h1List,~] = xlsread(filename, 'medium', 'C3:C33');
+                [~,obj.h2List,~] = xlsread(filename, 'medium', 'D3:D33');
             end
             
             if obj.game.level == Level.Hard
@@ -155,12 +155,23 @@ classdef Questions < handle
             anr = [];
         end
         
+        % sets the new level at end of easy and medium levels
+        function anr = setNextLevel(obj)
+            if obj.game.level == Level.Easy
+                anr = true;
+                obj.game.setLevel('Medium');
+            else
+                anr = true;
+                obj.game.setLevel('Hard');
+            end     
+        end
+        
     end
     
     %functions for Easy Level
     methods
         function anr = anrYes(obj)
-           if isempty(strfind(lower(obj.game.getAxnLoc), 'y'))
+           if isempty(strfind(lower(obj.resp), 'y'))
                anr = false;
            else
                anr = true;
@@ -168,57 +179,76 @@ classdef Questions < handle
         end    
         
         function anr = anrNo(obj)
-           if isempty(strfind(lower(obj.game.getAxnLoc), 'n'))
+           if isempty(strfind(lower(obj.resp), 'n'))
                anr = false;
            else
                anr = true;
            end
-        end   
-        
+        end       
         
         function anr = probArry(obj)
             [x, y] = size(obj.game.board.board);
-            disp(obj.game.getAxnLoc)
-            disp(1/(x*y))
-            if obj.game.getAxnLoc == 1/(x * y)
+            if str2num(obj.resp) == 1/(x * y)
                 anr = true;
             else
                 anr = false;
             end
         end   
-        
-        
+               
         function anr = sizeNrn(obj)
             %find the size of the neuron, and subtract the number of 0
             %cells
-            [x, y] = size(obj.game.neuron.getNeuron);
-            if obj.game.getAxnLoc == x * y - sum(obj.game.neuron.getNeuron(:)==0)
+            ourNrn = obj.game.neuron.getNeuron;
+            [x, y] = size(ourNrn);
+            if str2num(obj.resp) == x * y - sum(ourNrn(:)==0)
                 anr = true;
             else
                 anr = false;
             end
         end   
-        
         
         function anr = probAxnNrn(obj)
-            [x, y] = size(obj.game.neuron.getNeuron);
-            if obj.game.getAxnLoc == 1/(x * y - sum(obj.game.neuron.getNeuron(:)==0))
+            ourNrn = obj.game.neuron.getNeuron;
+            [x, y] = size(ourNrn);
+            if str2num(obj.resp) == (sum(ourNrn(:)==2))/(x * y - sum(ourNrn(:)==0))
                 anr = true;
             else
                 anr = false;
             end
         end   
         
-        % assuming # of axon squares == dendrite squares, VERIFY
-        function anr = prob(obj)
-            [x, y] = size(obj.game.neuron.getNeuron);
-            t = x * y - sum(obj.game.neuron.getNeuron(:)==0);
-            if obj.game.getAxnLoc == (1+(t-1)/2)/t
+        function anr = probAxonAH(obj)
+            ourNrn = obj.game.neuron.getNeuron;
+            [x, y] = size(ourNrn);
+            if str2num(obj.resp) == (sum(ourNrn(:)==2) + sum(ourNrn(:)==-1))/(x * y - sum(ourNrn(:)==0))
                 anr = true;
             else
                 anr = false;
             end
         end
+        
+        function anr = probDendriteAH(obj)
+            ourNrn = obj.game.neuron.getNeuron;
+            [x, y] = size(ourNrn);
+            if str2num(obj.resp) == (sum(ourNrn(:)==2) + sum(ourNrn(:)==1))/(x * y - sum(ourNrn(:)==0))
+                anr = true;
+            else
+                anr = false;
+            end
+        end
+        
+        function anr = probAxonDendrite(obj)
+            ourNrn = obj.game.neuron.getNeuron;
+            [x, y] = size(obj.game.board.board);
+            if str2num(obj.resp) == (sum(ourNrn(:)==-1) + sum(ourNrn(:)==1))/(x * y)
+                anr = true;
+            else
+                anr = false;
+            end
+        end
+        
+        
+        
     end
     
     %functions for Medium Level
@@ -248,20 +278,68 @@ classdef Questions < handle
             obj.game.guesses = [];
             [a,b] = size(obj.game.board.board);
             nElec =  a*b;%number of electrodes
-            corrAnr = length(obj.game.getAxnLoc) / nElec;
-            res = str2num(obj.resp);
-            if  abs(res - corrAnr) <  -8.0000e-04 %LOGIC
+            corrAnr = length(obj.game.getAxnLoc) / nElec
+            res = str2num(obj.resp)
+            if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
                 anr = true;
             else
                 anr = false;
             end
             obj.game.board.shown = zeros(size(obj.game.board.board));
-            obj.game.board.shown(14) = .5;
-            obj.game.board.shown(18) = 1;
+            obj.game.board.shown(34) = .5;
+            obj.game.board.shown(40) = 1;
         end
-        function anr = probBehind(obj)
-            corrAnr = 1/sum(obj.game.getAxnLoc);
-            if obj.game.resp == corrAnr %LOGIC
+       
+        % Number questions
+        function anr = four25ths(obj)
+            corrAnr = 4/25
+            res = str2num(obj.resp)
+            if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
+                anr = true;
+            else
+                anr = false;
+            end
+        end
+        function anr = four6ths(obj)
+            corrAnr = 4/6
+            res = str2num(obj.resp)
+            if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
+                anr = true;
+            else
+                anr = false;
+            end
+        end
+        function anr = two9ths(obj)
+            corrAnr = 2/9
+            res = str2num(obj.resp)
+            if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
+                anr = true;
+            else
+                anr = false;
+            end
+        end
+        function anr = six25ths(obj)
+            corrAnr = 6/25
+            res = str2num(obj.resp)
+            if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
+                anr = true;
+            else
+                anr = false;
+            end
+        end
+        function anr = eighteen25ths(obj)
+            corrAnr = 18/25
+            res = str2num(obj.resp)
+            if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
+                anr = true;
+            else
+                anr = false;
+            end
+        end
+        function anr = seven25ths(obj)
+            corrAnr = 7/25
+            res = str2num(obj.resp)
+            if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
                 anr = true;
             else
                 anr = false;
@@ -279,9 +357,15 @@ classdef Questions < handle
         %    edit shownBoard
         function anr = hardGame1(obj)
             % ask to click location
-            [x,y] = ginput2(1);
-            I = obj.convertGuess(x,y);
+            obj.game.click = true;
+            len = length(obj.game.guesses);
+            while length(obj.game.guesses) == len
+                pause(1);
+            end
+            obj.resp = obj.game.guesses(end);
             % change color for point of current guess
+            obj.game.board.shown(good) = 1;
+            anr = true;
         end
         function anr = hardGame2(obj)
             % ask to calculate probability nrn is there

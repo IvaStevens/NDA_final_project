@@ -38,10 +38,10 @@ classdef Questions < handle
             if obj.game.level == Level.Medium
                 % may need to add 'basic' after column range if using a
                 % Unix system
-                [~,obj.qList,~] = xlsread(filename, 'medium', 'A3:A40'); % filename, level sheet, column
-                [~,obj.aList,~] = xlsread(filename, 'medium', 'B3:B40');
-                [~,obj.h1List,~] = xlsread(filename, 'medium', 'C3:C40');
-                [~,obj.h2List,~] = xlsread(filename, 'medium', 'D3:D40');
+                [~,obj.qList,~] = xlsread(filename, 'medium', 'A3:A33'); % filename, level sheet, column
+                [~,obj.aList,~] = xlsread(filename, 'medium', 'B3:B33');
+                [~,obj.h1List,~] = xlsread(filename, 'medium', 'C3:C33');
+                [~,obj.h2List,~] = xlsread(filename, 'medium', 'D3:D33');
             end
             
             if obj.game.level == Level.Hard
@@ -155,6 +155,20 @@ classdef Questions < handle
             anr = [];
         end
         
+        % sets the new level at end of easy and medium levels
+        function anr = setNextLevel(obj)
+            if isempty(strfind(lower(obj.resp), 'ready'))
+               anr = false;
+            else
+               anr = true;
+               if obj.game.level == Level.Easy
+                   obj.game.setLevel('Medium');
+               else
+                   obj.game.setLevel('Hard');
+               end
+            end
+        end
+        
     end
     
     %functions for Easy Level
@@ -199,26 +213,45 @@ classdef Questions < handle
         function anr = probAxnNrn(obj)
             ourNrn = obj.game.neuron.getNeuron;
             [x, y] = size(ourNrn);
-            if str2num(obj.resp) == 1/(x * y - sum(ourNrn(:)==0))
+            if str2num(obj.resp) == (sum(ourNrn(:)==2))/(x * y - sum(ourNrn(:)==0))
                 anr = true;
             else
                 anr = false;
             end
         end
         
-        % need to modify this function to calculate P(AH) + P(A) only and
-        % new function for P(AH) + P(D)
-        % assuming # of axon squares == dendrite squares, VERIFY
-        function anr = prob(obj)
+        function anr = probAxonAH(obj)
             ourNrn = obj.game.neuron.getNeuron;
             [x, y] = size(ourNrn);
-            t = x * y - sum(ourNrn(:)==0);
-            if str2num(obj.resp) == (1+(t-1)/2)/t
+            if str2num(obj.resp) == (sum(ourNrn(:)==2) + sum(ourNrn(:)==-1))/(x * y - sum(ourNrn(:)==0))
                 anr = true;
             else
                 anr = false;
             end
         end
+        
+        function anr = probDendriteAH(obj)
+            ourNrn = obj.game.neuron.getNeuron;
+            [x, y] = size(ourNrn);
+            if str2num(obj.resp) == (sum(ourNrn(:)==2) + sum(ourNrn(:)==1))/(x * y - sum(ourNrn(:)==0))
+                anr = true;
+            else
+                anr = false;
+            end
+        end
+        
+        function anr = probAxonDendrite(obj)
+            ourNrn = obj.game.neuron.getNeuron;
+            [x, y] = size(obj.game.board.board);
+            if str2num(obj.resp) == (sum(ourNrn(:)==-1) + sum(ourNrn(:)==1))/(x * y)
+                anr = true;
+            else
+                anr = false;
+            end
+        end
+        
+        
+        
     end
     
     %functions for Medium Level

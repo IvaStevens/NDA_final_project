@@ -39,6 +39,7 @@ classdef Battleship < handle
             obj.board.placeNeuron(nrn);
             obj.faq = Questions(obj);
             obj.contNum=cNum;
+            obj.notebook=Notebook(lvl);
         end
         %This function should pull the next question/answer set
         %from the questions class. It will repetively call for these
@@ -86,8 +87,12 @@ classdef Battleship < handle
                 end
             else
                 last = obj.faq.getQuestion(); %logic
+<<<<<<< HEAD
                 out = ['Sorry. Try again. ',last];                
                 obj.score = scr - 2;
+=======
+                out = ['Sorry. Try again.',last];
+>>>>>>> a657fd08781c5defb9088b6b0990e43df47e104b
             end
         end
         
