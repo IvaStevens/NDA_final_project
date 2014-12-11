@@ -157,6 +157,50 @@ classdef Questions < handle
         
     end
     
+    %functions for Easy Level
+    methods
+        function anr = anrYes(obj)
+           if isempty(strfind(lower(obj.game.getAxnLoc), 'y'))
+               anr = false;
+           else
+               anr = true;
+           end    
+        end    
+        
+        function anr = anrNo(obj)
+           if isempty(strfind(lower(obj.game.getAxnLoc), 'n'))
+               anr = false;
+           else
+               anr = true;
+           end
+        end   
+        
+        
+        function anr = probArry
+        
+        end   
+        
+        
+        function anr = sizeNrn
+            %find the size of the neuron, and subtract the number of 0
+            %cells
+            [x, y] = size(obj.game.nrn);
+            if obj.game.getAxnLoc == x * y - sum(obj.game.nrn(:)==0)
+                anr = true;
+            else
+                anr = false;
+            end
+        end   
+        
+        
+        function anr = probAxnNrn
+        end   
+        
+        
+        function anr = prob
+        end
+    end
+    
     %functions for Medium Level
     methods
         function anr = findAxnHil(obj)
@@ -179,7 +223,7 @@ classdef Questions < handle
             anr = true;
         end
         function anr = probAxnHil(obj)
-            [a,b] = size(obj.game.borad.board);
+            [a,b] = size(obj.game.board.board);
             nElec =  a*b;%number of electrodes
             corrAnr = sum(obj.game.getAxnLoc) / nElec;
             if obj.game.resp == corrAnr %LOGIC
