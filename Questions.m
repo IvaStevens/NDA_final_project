@@ -262,8 +262,8 @@ classdef Questions < handle
        
         % Number questions
         function anr = four25ths(obj)
-            corrAnr = 4/25
-            res = str2num(obj.resp)
+            corrAnr = 4/25;
+            res = str2num(obj.resp);
             if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
                 anr = true;
             else
@@ -271,8 +271,8 @@ classdef Questions < handle
             end
         end
         function anr = four6ths(obj)
-            corrAnr = 4/6
-            res = str2num(obj.resp)
+            corrAnr = 4/6;
+            res = str2num(obj.resp);
             if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
                 anr = true;
             else
@@ -280,8 +280,8 @@ classdef Questions < handle
             end
         end
         function anr = two9ths(obj)
-            corrAnr = 2/9
-            res = str2num(obj.resp)
+            corrAnr = 2/9;
+            res = str2num(obj.resp);
             if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
                 anr = true;
             else
@@ -289,8 +289,8 @@ classdef Questions < handle
             end
         end
         function anr = six25ths(obj)
-            corrAnr = 6/25
-            res = str2num(obj.resp)
+            corrAnr = 6/25;
+            res = str2num(obj.resp);
             if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
                 anr = true;
             else
@@ -298,8 +298,8 @@ classdef Questions < handle
             end
         end
         function anr = eighteen25ths(obj)
-            corrAnr = 18/25
-            res = str2num(obj.resp)
+            corrAnr = 18/25;
+            res = str2num(obj.resp);
             if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
                 anr = true;
             else
@@ -307,8 +307,8 @@ classdef Questions < handle
             end
         end
         function anr = seven25ths(obj)
-            corrAnr = 7/25
-            res = str2num(obj.resp)
+            corrAnr = 7/25;
+            res = str2num(obj.resp);
             if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
                 anr = true;
             else
@@ -325,24 +325,48 @@ classdef Questions < handle
         %    told if nrn is there
         %    set variable if entire nrn found to end game
         %    edit shownBoard
-        function anr = hardGame1(obj)
+        function anr = hard1(obj)
             % ask to click location
             obj.game.click = true;
             len = length(obj.game.guesses);
             while length(obj.game.guesses) == len
                 pause(1);
             end
-            obj.resp = obj.game.guesses(end);
-            % change color for point of current guess
-            obj.game.board.shown(good) = 1;
+            % turn off click
+            obj.game.click = false;
             anr = true;
         end
-        function anr = hardGame2(obj)
-            % ask to calculate probability nrn is there
-            
+        
+        function anr = hard2(obj)
+            % ask to calculate probability nrn is there            
+            I = obj.game.guesses(end);
+            res = obj.resp;
+            probMat = obj.game.calcProbMat;
+            corrAnr = probMat(I);         
+            if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
+                anr = true;
+            else
+                anr = false;
+            end
+        end
+        
+        function anr = hard3(obj)                        
+            I = obj.game.guesses(end);
             % told if nrn is there
-            % set variable if entire nrn found to end game
+            % change color for point of current guess 
+            if obj.game.board.board(I)
+                obj.game.board.shown(I) = .5;
+            else                
+                obj.game.board.shown(I) = .25;
+            end           
+            % set variable if entire nrn found to end game 
+            nrn = find(obj.game.board.board); %Logic
+            nlen = length(nrn);
+            if sum(ismember(nrn,obj.game.guesses)) == nlen
+                obj.game.contNum = 106; %Logic
+            end
             % edit shownBoard
+            anr = true;
         end
     end
     

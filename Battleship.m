@@ -71,12 +71,17 @@ classdef Battleship < handle
         function out = checkans(obj, str)
             obj.faq.setUserResponse(str); % write this. set new variable in Question function
             check = obj.faq.answerQuestion;
-            %check = true;
             if check
                 out = 'Correct! Press Continue';
+                if strcmp(strtrim(getAnswer(obj.faq)), '@hard1')
+                    out = 'Press Continue';
+                end
+                if strcmp(strtrim(getAnswer(obj.faq)), '@KeyPressed')
+                    out = 'Press Continue';
+                end
             else
                 last = obj.faq.getQuestion(); %logic
-                out = ['Sorry. Try again. \n',last];
+                out = ['Sorry. Try again. ',last];
             end
         end
         
@@ -85,71 +90,9 @@ classdef Battleship < handle
             % assert guess not repeated
             obj.guesses = [obj.guesses, guess];
         end
-        
-        function prob = calc_probabilty_nrn(obj)
-            % This function uses the design of the neuron, the size of the board, and previous guesses
-            % to determine a matix of values that corresponds to the probability that the neuron is located
-            % at any given spot.
-            nrn = abs(obj.neuron.getNeuron); % neuron matrix
-            [nLen, nWid] = size(nrn);
-            n = sum(nrn > 0);
-            nrnMask = int(rot90(rot90(nrn == 0))); %1 => where it can be
-            f = find(nrn);
-            m = zeros(bLen, bWid, n);
-            for i = 1:n
-                temp = ones(bLen, bWid); % 1 => where the point could be
-                pt = f(n);
-                top = ceil(pt/bWid);
-                
-                % remove top row if necessary
-                if top ~= 1
-                    temp(1:top-1,:) = 0;
-                end
-                
-                % remove bottom row if necessary
-                if top ~= bLen
-                    bot = nLen-top;
-                    temp(bLen-(bot-1):bLen,:) = 0;
-                end
-                
-                % remove left side
-                lft = mod(pt,nWid);
-                if left ~= 1
-                    temp(:,1:lft-1) = 0;
-                end
-                
-                % remove right side
-                if lft ~= nWid
-                    rgt = nWid - lft;
-                    temp(:, bWid - (rgt - 1): bWid) = 0;
-                end
-                
-                % remove space around guesses
-                nGes = length(obj.guesses);
-                for j = 1: nGes
-                    if temp(obj.guesses(j)) ~= 0
-                        %gX =
-                        %gY =
-                        tp = -1; %logic?
-                        lf = -1; %logic?
-                        temp(tp:tp+nLen-1,lf:lf+nWid-1) = nrnMask;
-                    end
-                end
-                m(:,:,i) = temp;
-            end
-            s = sum(m,3);
-            tot = sum(sum(m));
-            prob = s/tot;
-        end
-        
-        function a = calc_probabilty_axn(obj,guesses)
-            % This function uses the design of the neuron, the size of the board, and previous guesses
-            % to determine a matix of values that corresponds to the probability that the neuron is located
-            % at any given spot.
-            H = hillock_locations(obj); % returns boolean matrix that refernces whether or not the axon hillock could be here
-            H(guesses) = 0;
-            uni = sum(sum(H)); % Cardinality of set for which axon could be.
-            a = H/uni;
+       
+        function M = calcProbMat(obj)
+            A = getAxnLoc(obj);
         end
         
         function A = getAxnLoc(obj)

@@ -298,6 +298,10 @@ OB.guesses = [OB.guesses,I];
 end
 
 % updates board
+if OB.level == Level.Hard
+    OB.board.shown(I) = .5;
+end
+
 shownBrd=OB.board.getShown;
 bx=size(shownBrd,2); by=size(shownBrd,1);
 imagesc(shownBrd,'parent',handles.axes1);
