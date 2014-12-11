@@ -248,68 +248,20 @@ classdef Questions < handle
             obj.game.guesses = [];
             [a,b] = size(obj.game.board.board);
             nElec =  a*b;%number of electrodes
-            corrAnr = length(obj.game.getAxnLoc) / nElec
-            res = str2num(obj.resp)
-            if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
+            corrAnr = length(obj.game.getAxnLoc) / nElec;
+            res = str2num(obj.resp);
+            if  abs(res - corrAnr) <  -8.0000e-04 %LOGIC
                 anr = true;
             else
                 anr = false;
             end
             obj.game.board.shown = zeros(size(obj.game.board.board));
-            obj.game.board.shown(34) = .5;
-            obj.game.board.shown(40) = 1;
+            obj.game.board.shown(14) = .5;
+            obj.game.board.shown(18) = 1;
         end
-       
-        % Number questions
-        function anr = four25ths(obj)
-            corrAnr = 4/25
-            res = str2num(obj.resp)
-            if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
-                anr = true;
-            else
-                anr = false;
-            end
-        end
-        function anr = four6ths(obj)
-            corrAnr = 4/6
-            res = str2num(obj.resp)
-            if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
-                anr = true;
-            else
-                anr = false;
-            end
-        end
-        function anr = two9ths(obj)
-            corrAnr = 2/9
-            res = str2num(obj.resp)
-            if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
-                anr = true;
-            else
-                anr = false;
-            end
-        end
-        function anr = six18ths(obj)
-            corrAnr = 6/18
-            res = str2num(obj.resp)
-            if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
-                anr = true;
-            else
-                anr = false;
-            end
-        end
-        function anr = eighteen25ths(obj)
-            corrAnr = 18/25
-            res = str2num(obj.resp)
-            if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
-                anr = true;
-            else
-                anr = false;
-            end
-        end
-        function anr = seven25ths(obj)
-            corrAnr = 7/25
-            res = str2num(obj.resp)
-            if  abs(res - corrAnr) <  8.0000e-04 %LOGIC
+        function anr = probBehind(obj)
+            corrAnr = 1/sum(obj.game.getAxnLoc);
+            if obj.game.resp == corrAnr %LOGIC
                 anr = true;
             else
                 anr = false;
