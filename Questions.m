@@ -160,7 +160,7 @@ classdef Questions < handle
     %functions for Easy Level
     methods
         function anr = anrYes(obj)
-           if isempty(strfind(lower(obj.game.getAxnLoc), 'y'))
+           if isempty(strfind(lower(obj.resp), 'y'))
                anr = false;
            else
                anr = true;
@@ -168,7 +168,7 @@ classdef Questions < handle
         end    
         
         function anr = anrNo(obj)
-           if isempty(strfind(lower(obj.game.getAxnLoc), 'n'))
+           if isempty(strfind(lower(obj.resp), 'n'))
                anr = false;
            else
                anr = true;
@@ -178,9 +178,10 @@ classdef Questions < handle
         
         function anr = probArry(obj)
             [x, y] = size(obj.game.board.board);
-            disp(obj.game.getAxnLoc)
+            disp(obj.resp)
             disp(1/(x*y))
-            if obj.game.getAxnLoc == 1/(x * y)
+            if str2num(obj.resp) == 1/(x * y)
+                disp(1/(x*y))
                 anr = true;
             else
                 anr = false;
@@ -191,8 +192,9 @@ classdef Questions < handle
         function anr = sizeNrn(obj)
             %find the size of the neuron, and subtract the number of 0
             %cells
-            [x, y] = size(obj.game.neuron.getNeuron);
-            if obj.game.getAxnLoc == x * y - sum(obj.game.neuron.getNeuron(:)==0)
+            ourNrn = obj.game.neuron.getNeuron;
+            [x, y] = size(ourNrn);
+            if str2num(obj.resp) == x * y - sum(ourNrn(:)==0)
                 anr = true;
             else
                 anr = false;
@@ -202,7 +204,7 @@ classdef Questions < handle
         
         function anr = probAxnNrn(obj)
             [x, y] = size(obj.game.neuron.getNeuron);
-            if obj.game.getAxnLoc == 1/(x * y - sum(obj.game.neuron.getNeuron(:)==0))
+            if str2num(obj.resp) == 1/(x * y - sum(obj.game.neuron.getNeuron(:)==0))
                 anr = true;
             else
                 anr = false;
@@ -213,7 +215,7 @@ classdef Questions < handle
         function anr = prob(obj)
             [x, y] = size(obj.game.neuron.getNeuron);
             t = x * y - sum(obj.game.neuron.getNeuron(:)==0);
-            if obj.game.getAxnLoc == (1+(t-1)/2)/t
+            if str2num(obj.resp) == (1+(t-1)/2)/t
                 anr = true;
             else
                 anr = false;
