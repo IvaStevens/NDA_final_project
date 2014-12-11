@@ -128,7 +128,7 @@ classdef Questions < handle
             old = obj.game.board.board;
             while length(temp) ~= l
                 [x,y] = ginput2(1);
-                guess = convertGuess(x,y);
+                guess = obj.convertGuess(x,y);
                 if ismember(guess,corrAnr) && ~ismember(guess,temp)
                     temp = [temp,guess];
                     %show correct guesses
@@ -205,15 +205,14 @@ classdef Questions < handle
     methods
         function anr = findAxnHil(obj)
             obj.game.guesses = [];
-            corrAnr = sort(obj.game.getAxnLoc); %Logic, write this
+            corrAnr = obj.game.getAxnLoc; %Logic, write this
             temp = [];
             %old = obj.game.board.board;
-            while temp ~= corrAnr
+            while length(temp) ~= length(corrAnr)
                 [x,y] = ginput2(1);
-                I = Questions.convertGuess(x,y);
-                if ismemeber(I,corrAnr) && ~ismember(I, temp)
+                I = obj.convertGuess(x,y);
+                if ismember(I,corrAnr) && ~ismember(I, temp)
                     temp = [temp,I];
-                    temp = sort(temp);
                     %change color of board
                     obj.game.board.board(I) = 1;
                 end
@@ -253,7 +252,7 @@ classdef Questions < handle
         function anr = hardGame1(obj)
             % ask to click location
             [x,y] = ginput2(1);
-            I = convertGuess(x,y);
+            I = obj.convertGuess(x,y);
             % change color for point of current guess
         end
         function anr = hardGame2(obj)
@@ -266,7 +265,7 @@ classdef Questions < handle
     end
     
     %Various helper functions
-    methods (Static)
+    methods 
         % I want this function to parse the string response from the user
         % and evaluate it in matlab it if contains a division symbol. '\'
         % and otherwise just return the decimal value
@@ -274,10 +273,10 @@ classdef Questions < handle
             numResult = str2num(str);
         end
         
-        function I = convertGuess(x, y)
+        function I = convertGuess(obj, x, y)
             %function takes the x,y location and returns the index number for
             %the board square that it corresponds to.
-            [r, c] = size(obj.game.board);
+            [~, c] = size(obj.game.board);
             I = round(x) + (round(y)-1) * c;
         end
     end
