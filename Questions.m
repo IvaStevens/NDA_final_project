@@ -350,13 +350,8 @@ classdef Questions < handle
     
     %functions for Hard questions
     methods
-        % Question set called at most 15 times to find the nrn
-        % 1) ask to click location
-        % 2) ask to calculate probability nrn is there
-        %    told if nrn is there
-        %    set variable if entire nrn found to end game
-        %    edit shownBoard
         function anr = hard1(obj)
+            global contNum
             % ask to click location
             obj.game.click = true;
             len = length(obj.game.guesses);
@@ -368,14 +363,9 @@ classdef Questions < handle
             
             if sum(ismember(ind,obj.game.guesses)) > 0
                 while sum(ismember(ind,obj.game.guesses)) < length(ind)
-%                     I = obj.game.guesses(end);
-%                     if obj.game.board.board(I)
-%                         obj.game.board.shown(I) = .5;
-%                     else
-%                         obj.game.board.shown(I) = .25;
-%                     end
                     pause(.001)
                 end
+                contNum = 101; 
             end
             % rest of the nrn is found then game over.
             % turn off click
@@ -397,7 +387,7 @@ classdef Questions < handle
             if  abs(res - corrAnr) <  8.0000e-04 
                 anr = true;
             else
-                anr = true;%LOGIC
+                anr = false;
             end
         end
         
@@ -407,8 +397,6 @@ classdef Questions < handle
             % change color for point of current guess
             if obj.game.board.board(I)
                 obj.game.board.shown(I) = .5;
-                %else
-                %   obj.game.board.shown(I) = .25;
             end
             % set variable if entire nrn found to end game
             nrn = find(obj.game.board.board); %Logic
@@ -417,6 +405,11 @@ classdef Questions < handle
                 obj.game.contNum = 102; %Logic
             end
             % edit shownBoard
+            anr = true;
+        end
+        function anr = GameOver(obj)
+            global contNum
+            contNum = 101;
             anr = true;
         end
     end

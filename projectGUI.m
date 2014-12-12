@@ -214,17 +214,13 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 % if hintNum > 0  %% Closes hint window after they move on from the question
 %     close(figure(2));
 % else
-<<<<<<< HEAD
 global OB
 global eXLabel;
 global eYLabel;
-=======
-global OB 
->>>>>>> daa3849097dfbff6a4e0a0d4fd549c1e3aa13695
 global contNum;
 %contNum=105; did this to test game over figure
 
-contNum=contNum+1;
+contNum=contNum+1
 
 % updates board
 shownBrd=OB.board.getShown;
@@ -292,11 +288,11 @@ set(gca,'XTickLabel','','YTickLabel','')
 
 function clickableCall(hObject,eventdata, handles)
 global OB
-
+global eXLabel
+global eYLabel
 
 %disp('here');
 if OB.click == true
-<<<<<<< HEAD
     %pos = get(hObject,'CurrentPoint')
     %x = pos(1);
     %y = pos(2);
@@ -327,26 +323,6 @@ if OB.click == true
     set(handles.axes1,'xtick',linspace(0.5,bx+0.5,bx+1),'ytick',linspace(0.5,by+0.5,by+1));
     set(handles.axes1,'XTickLabel',eXLabel,'YTickLabel',eYLabel);
     set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
-    
-=======
-%pos = get(hObject,'CurrentPoint')
-%x = pos(1);
-%y = pos(2);
-[x,y] = ginput2(1);
-I = OB.faq.convertGuess(x,y);
-if ~ismember(I, OB.guesses)
-OB.guesses = [OB.guesses,I];
-end
 
-% updates board
-shownBrd=OB.board.getShown;
-bx=size(shownBrd,2); by=size(shownBrd,1);
-imagesc(shownBrd,'parent',handles.axes1);
-pbaspect(handles.axes1,[bx by 1]); %makes it look nice
-set(handles.axes1,'xtick',linspace(0.5,bx+0.5,bx+1),'ytick',linspace(0.5,by+0.5,by+1));
-set(handles.axes1,'XTickLabel','','YTickLabel','');
-set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
-
->>>>>>> daa3849097dfbff6a4e0a0d4fd549c1e3aa13695
 end
 
