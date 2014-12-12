@@ -77,11 +77,12 @@ classdef Battleship < handle
             if check
                 out = 'Correct! Press Continue';
                 obj.score = scr + 5;
-                if strcmp(strtrim(getAnswer(obj.faq)), '@hard1')
+                aa = getAnswer(obj.faq);
+                if ~isempty(aa) && strcmp(strtrim(aa), '@hard1')
                     out = 'Press Continue';
                     obj.score = scr;
                 end
-                if strcmp(strtrim(getAnswer(obj.faq)), '@KeyPressed')
+                if ~isempty(aa) && strcmp(strtrim(getAnswer(obj.faq)), '@KeyPressed')
                     out = 'Press Continue';
                     obj.score = scr;
                 end

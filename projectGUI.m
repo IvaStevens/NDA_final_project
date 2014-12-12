@@ -220,7 +220,7 @@ global eYLabel;
 global contNum;
 %contNum=105; did this to test game over figure
 
-contNum=contNum+1
+contNum=contNum+1;
 
 % updates board
 shownBrd=OB.board.getShown;
@@ -234,7 +234,7 @@ set(handles.axes1,'xgrid','on','ygrid','on','gridlinestyle','-');
 str = OB.getnextquest();
 set(handles.text1,'string',str);
 
-if contNum == 102    %number of times they should hit continue to go through all the questions in the excel file
+if contNum >= 102    %number of times they should hit continue to go through all the questions in the excel file
     figure(3);
     GOax=gca;
     GOfig=imread('cute_neuron2.jpg');

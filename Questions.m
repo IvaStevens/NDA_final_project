@@ -409,7 +409,8 @@ classdef Questions < handle
         end
         function anr = GameOver(obj)
             global contNum
-            contNum = 101;
+            contNum = contNum + 101;
+            print('I was heeeeeere')
             anr = true;
         end
     end
